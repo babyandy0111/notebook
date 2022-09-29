@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>install k8s cluster on Ubuntu | Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="本文將介紹如何安裝k8s到Ubuntu，在安裝前請先準備三個虛擬機，你可以透過virtualbox進行安裝，以下規格可以參考：    Server Type Hostname Specs    Master k8s-master01 4GB Ram, 2vcpus   Worker k8s-worker01 4GB Ram, 2vcpus   Worker k8s-worker02 4GB Ram">
+<meta property="og:type" content="article">
+<meta property="og:title" content="install k8s cluster on Ubuntu">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/install-k8s-on-Ubuntu/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="本文將介紹如何安裝k8s到Ubuntu，在安裝前請先準備三個虛擬機，你可以透過virtualbox進行安裝，以下規格可以參考：    Server Type Hostname Specs    Master k8s-master01 4GB Ram, 2vcpus   Worker k8s-worker01 4GB Ram, 2vcpus   Worker k8s-worker02 4GB Ram">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-Ubuntu/kube-init.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-Ubuntu/kube-init-2.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-Ubuntu/kube-init-3.png">
+<meta property="article:published_time" content="2022-05-16T07:21:08.000Z">
+<meta property="article:modified_time" content="2022-09-29T04:08:18.523Z">
+<meta property="article:author" content="Andy">
+<meta property="article:tag" content="k8s kubernetes cluster">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-Ubuntu/kube-init.png">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-install-k8s-on-Ubuntu" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/install-k8s-on-Ubuntu/" class="article-date">
+  <time class="dt-published" datetime="2022-05-16T07:21:08.000Z" itemprop="datePublished">2022-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      install k8s cluster on Ubuntu
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文將介紹如何安裝k8s到Ubuntu，在安裝前請先準備三個虛擬機，你可以透過virtualbox進行安裝，以下規格可以參考：</p>
+<table>
+<thead>
+<tr>
+<th>Server Type</th>
+<th>Hostname</th>
+<th>Specs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Master</td>
+<td>k8s-master01</td>
+<td>4GB Ram, 2vcpus</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>k8s-worker01</td>
+<td>4GB Ram, 2vcpus</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>k8s-worker02</td>
+<td>4GB Ram, 2vcpus</td>
+</tr>
+</tbody></table>
+<h1 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h1><ul>
+<li>針對Ubuntu進行配置</li>
+<li>安裝docker</li>
+<li>安裝kubeadm、kubectl以及kubelet</li>
+<li>建立並初始化 master 節點</li>
+<li>建立並將 worker 節點加入</li>
+</ul>
+<br>
+
+<h4 id="針對Ubuntu進行配置"><a href="#針對Ubuntu進行配置" class="headerlink" title="針對Ubuntu進行配置"></a>針對Ubuntu進行配置</h4><ul>
+<li><p>先關掉 swap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i &#x27;/ swap / s/^\(.*\)$/#\1/g&#x27; /etc/fstab</span><br><span class="line">sudo swapoff -a</span><br></pre></td></tr></table></figure>
+
+<br>
+</li>
+<li><p>接著啟用內核模組與配置sysctl</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Enable kernel modules</span></span><br><span class="line">sudo modprobe overlay</span><br><span class="line">sudo modprobe br_netfilter</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">Add some settings to sysctl</span></span><br><span class="line">sudo tee /etc/sysctl.d/kubernetes.conf&lt;&lt;EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">EOF</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">Reload sysctl</span></span><br><span class="line">sudo sysctl --system</span><br></pre></td></tr></table></figure>
+
+<br>
+</li>
+<li><p>更新一下，並重新開機</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt -y full-upgrade</span><br><span class="line">[ -f /var/run/reboot-required ] &amp;&amp; sudo reboot -f</span><br></pre></td></tr></table></figure>
+
+<br></li>
+</ul>
+<h4 id="install-docker-並且修改一下cgroups"><a href="#install-docker-並且修改一下cgroups" class="headerlink" title="install docker 並且修改一下cgroups"></a>install docker 並且修改一下cgroups</h4>  <br>
+
+<p>  cgroups是啥呢，你可以把它理解成一個進程處理隔離工具，docker就是用它来實現容器的隔離的。docker 默認使用的是cgroupfs，<br>  而 k8s 也用到了一个進程隔離工具systemd，如果使用兩個隔離工具的話可能會引起異常，所以必須要把 docker 的也改成systemd。</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">更新並安裝相關所需套件</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">增加repo</span></span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">更新並安裝docker</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y containerd.io docker-ce docker-ce-cli</span><br><span class="line"><span class="meta">  </span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">建立資料夾</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">建立 daemon json config 文件，並填入內容</span></span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span><br><span class="line">  &quot;log-driver&quot;: &quot;json-file&quot;,</span><br><span class="line">  &quot;log-opts&quot;: &#123;</span><br><span class="line">    &quot;max-size&quot;: &quot;100m&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;storage-driver&quot;: &quot;overlay2&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">重啟docker</span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br><span class="line">sudo systemctl enable docker</span><br><span class="line"><span class="meta">  </span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">檢查是否安裝與修改成功</span></span><br><span class="line">docker info | grep Cgroup</span><br></pre></td></tr></table></figure>
+
+  <br>
+
+<h4 id="install-kubelet-kubeadm-and-kubectl"><a href="#install-kubelet-kubeadm-and-kubectl" class="headerlink" title="install kubelet, kubeadm and kubectl"></a>install kubelet, kubeadm and kubectl</h4><p>  為每一個節點都安裝 kubelet, kubeadm and kubectl</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -y install curl apt-transport-https</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">增加repo</span></span><br><span class="line">curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -</span><br><span class="line">echo &quot;deb https://apt.kubernetes.io/ kubernetes-xenial main&quot; | sudo tee /etc/apt/sources.list.d/kubernetes.list</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">更新並且安裝相關所需套件</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt -y install vim git curl wget kubelet kubeadm kubectl</span><br><span class="line">sudo apt-mark hold kubelet kubeadm kubectl</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">確認是否安裝成功</span></span><br><span class="line">kubectl version --client &amp;&amp; kubeadm version</span><br></pre></td></tr></table></figure>
+
+  <br>
+
+<h4 id="建立並初始化master節點"><a href="#建立並初始化master節點" class="headerlink" title="建立並初始化master節點"></a>建立並初始化master節點</h4>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">初始化</span></span><br><span class="line">kubeadm init \</span><br><span class="line">--apiserver-advertise-address=192.168.0.1 \</span><br><span class="line">--pod-network-cidr=192.168.0.0/16</span><br></pre></td></tr></table></figure>
+<br>
+--apiserver-advertise-address: k8s 中的主要節點的apiserver的位置，填自己的節點 ip
+<br>
+--pod-network-cidr: k8s內部的網路
+<br>
+
+<p>這時候你會看到類似以下圖片的結果，記得把最後一句join記下來</p>
+<img src="/notebook/install-k8s-on-Ubuntu/kube-init.png" class="" title="label">
+
+<br>
+
+<h4 id="建立並將-worker-節點加入"><a href="#建立並將-worker-節點加入" class="headerlink" title="建立並將 worker 節點加入"></a>建立並將 worker 節點加入</h4><p>ssh 進入worker，並執行剛剛的join語法。 <br></p>
+<img src="/notebook/install-k8s-on-Ubuntu/kube-init-2.png" class="" title="label">
+
+<h4 id="確認"><a href="#確認" class="headerlink" title="確認"></a>確認</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes </span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/install-k8s-on-Ubuntu/kube-init-3.png" class="" title="label">
+
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://medium.com/starbugs/%E7%AC%AC%E4%B8%80%E5%8D%83%E9%9B%B6%E4%B8%80%E7%AF%87%E7%9A%84-cgroups-%E4%BB%8B%E7%B4%B9-a1c5005be88c">第一千零一篇的 cgroups 介紹</a><br><br><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://computingforgeeks.com/deploy-kubernetes-cluster-on-ubuntu-with-kubeadm/">Install Kubernetes Cluster on Ubuntu 20.04 with kubeadm</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/install-k8s-on-Ubuntu/" data-id="cl8n56o4d001crjtw2zf4ch7v" data-title="install k8s cluster on Ubuntu" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/notebook/install-k8s-on-gcp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          install k8s cluster on gcp
+        
+      </div>
+    </a>
+  
+  
+    <a href="/notebook/understanding-k8s-component/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">understanding-k8s-component</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

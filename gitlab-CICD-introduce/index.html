@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>gitlab CI/CD introduce | Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Gitlab CI&#x2F;CD軟件開發的持續方法基於自動執行腳本，以最大程度地減少在開發應用程序時引入錯誤的機會。從開發新代碼到部署新代碼，他們幾乎不需要人工干預，甚至根本不需要干預。它涉及到在每次小的迭代中就不斷地構建、測試和部署代碼更改，從而減少了基於已經存在 bug 或失敗的先前版本開發新代碼的機會。  Continuous Integration（持續集成），假設一個應用程序，其代碼存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab CI&#x2F;CD introduce">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="Gitlab CI&#x2F;CD軟件開發的持續方法基於自動執行腳本，以最大程度地減少在開發應用程序時引入錯誤的機會。從開發新代碼到部署新代碼，他們幾乎不需要人工干預，甚至根本不需要干預。它涉及到在每次小的迭代中就不斷地構建、測試和部署代碼更改，從而減少了基於已經存在 bug 或失敗的先前版本開發新代碼的機會。  Continuous Integration（持續集成），假設一個應用程序，其代碼存">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/1.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/2.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/3.png">
+<meta property="article:published_time" content="2022-09-29T04:13:18.000Z">
+<meta property="article:modified_time" content="2022-09-29T14:17:41.000Z">
+<meta property="article:author" content="Andy">
+<meta property="article:tag" content="cdk, gitlab, ci&#x2F;cd">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/1.png">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-gitlab-CICD-introduce" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/gitlab-CICD-introduce/" class="article-date">
+  <time class="dt-published" datetime="2022-09-29T04:13:18.000Z" itemprop="datePublished">2022-09-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      gitlab CI/CD introduce
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Gitlab-CI-x2F-CD"><a href="#Gitlab-CI-x2F-CD" class="headerlink" title="Gitlab CI&#x2F;CD"></a>Gitlab CI&#x2F;CD</h1><p>軟件開發的持續方法基於自動執行腳本，以最大程度地減少在開發應用程序時引入錯誤的機會。從開發新代碼到部署新代碼，他們幾乎不需要人工干預，甚至根本不需要干預。<br>它涉及到在每次小的迭代中就不斷地構建、測試和部署代碼更改，從而減少了基於已經存在 bug 或失敗的先前版本開發新代碼的機會。</p>
+<ul>
+<li><p>Continuous Integration（持續集成），假設一個應用程序，其代碼存儲在 GitLab 的 Git 倉庫中。開發人員每天都要多次推送代碼更改。對於每次向倉庫的推送，你都可以創建一組腳本來自動構建和測試你的應用程序，從而減少了嚮應用程序引入錯誤的機會。這種做法稱爲持續集成，對於提交給應用程序（甚至是開發分支）的每項更改，它都會自動連續進行構建和測試，以確保所引入的更改通過你爲應用程序建立的所有測試，準則和代碼合規性標準。</p>
+</li>
+<li><p>Continuous Delivery（持續交付），持續交付是超越持續集成的更進一步的操作。應用程序不僅會在推送到代碼庫的每次代碼更改時進行構建和測試，而且，儘管部署是手動觸發的，但作爲一個附加步驟，它也可以連續部署。此方法可確保自動檢查代碼，但需要人工干預才能從策略上手動觸發以必輸此次變更。</p>
+</li>
+<li><p>Continuous Deployment（持續部署），與持續交付類似，但不同之處在於，你無需將其手動部署，而是將其設置爲自動部署。完全不需要人工干預即可部署你的應用程序。</p>
+</li>
+</ul>
+<h1 id="GitLab-CI-x2F-CD-是如何工作的"><a href="#GitLab-CI-x2F-CD-是如何工作的" class="headerlink" title="GitLab CI&#x2F;CD 是如何工作的"></a>GitLab CI&#x2F;CD 是如何工作的</h1><p>爲了使用 GitLab CI&#x2F;CD，你需要一個託管在 GitLab 上的應用程序代碼庫，並且在根目錄中的 .gitlab-ci.yml 文件中指定構建、測試和部署的腳本。</p>
+<p>在這個文件中，你可以定義要運行的腳本，定義包含的依賴項，選擇要按順序運行的命令和要並行運行的命令，定義要在何處部署應用程序，以及指定是否 要自動運行腳本或手動觸發腳本。</p>
+<p>爲了可視化處理過程，假設添加到配置文件中的所有腳本與在計算機的終端上運行的命令相同。</p>
+<p>一旦你已經添加了. gitlab-ci.yml 到倉庫中，GitLab 將檢測到該文件，並使用名爲 GitLab Runner 的工具運行你的腳本。該工具的操作與終端類似。</p>
+<p>這些腳本被分組到 jobs，它們共同組成一個 Pipeline。一個最簡單的 .gitlab-ci.yml 文件可能是這樣的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">before_script:</span>   </span><br><span class="line">  <span class="bullet">-</span> <span class="string">apt-get</span> <span class="string">install</span> <span class="string">zip</span> <span class="string">-y</span>   </span><br><span class="line">  </span><br><span class="line"><span class="attr">run-test:</span>   </span><br><span class="line">  <span class="attr">script:</span>   </span><br><span class="line">    <span class="bullet">-</span> <span class="string">zip</span> <span class="string">--version</span> </span><br></pre></td></tr></table></figure>
+
+
+<h1 id="了解keyword"><a href="#了解keyword" class="headerlink" title="了解keyword"></a>了解keyword</h1><p>因此你要撰寫GitLab前，需要先了解許多keyword，可以到官網中，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.gitlab.com/ee/ci/yaml/index.html">GitLab CI&#x2F;CD Pipeline Configuration Reference</a>，下面就稍微介紹一下一些常用的keyword吧！</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pipeline</td>
+<td>線程，每次執行CICD都是一個線程</td>
+</tr>
+<tr>
+<td>stages</td>
+<td>線程中定義你的步驟，可以多個步驟，他是有順序的</td>
+</tr>
+<tr>
+<td>job</td>
+<td>每個階段也都會有許多job</td>
+</tr>
+<tr>
+<td>variables</td>
+<td>定義你的變數，在你的yaml檔案中，均可以取用這變數值</td>
+</tr>
+<tr>
+<td>image</td>
+<td>你的docker image</td>
+</tr>
+<tr>
+<td>before_script</td>
+<td>跑你的image前所執行的指令</td>
+</tr>
+<tr>
+<td>script</td>
+<td>跑你的image時執行的指令</td>
+</tr>
+<tr>
+<td>after_script</td>
+<td>跑你的image後所執行的指令</td>
+</tr>
+<tr>
+<td>artifacts</td>
+<td>跑完Job成功後附加到作業的文件和目錄列表</td>
+</tr>
+<tr>
+<td>dependencies</td>
+<td>需要先跑完哪個stages，才能被執行</td>
+</tr>
+</tbody></table>
+<h1 id="來個範例吧"><a href="#來個範例吧" class="headerlink" title="來個範例吧"></a>來個範例吧</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 宣告 Pipeline 有哪些 stages，並排定他們的先後順序</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build:golang</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build:aws-cli</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build:node</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 宣告變數</span></span><br><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">AWS_ACCESS_KEY_ID:</span> <span class="string">$AWS_ACCESS_KEY_ID</span></span><br><span class="line">  <span class="attr">AWS_SECRET_ACCESS_KEY:</span> <span class="string">$AWS_SECRET_ACCESS_KEY</span></span><br><span class="line">  <span class="attr">AWS_REGION:</span> <span class="string">$AWS_DEFAULT_REGION</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先宣告 job 的名稱</span></span><br><span class="line"><span class="attr">build:golang:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build:golang</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">golang:1.18.1</span> </span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">apt-get</span> <span class="string">update</span> <span class="string">-q</span> <span class="string">&amp;&amp;</span> <span class="string">apt-get</span> <span class="string">install</span> <span class="string">-y</span> <span class="string">zip</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cd</span> <span class="string">./fs</span> <span class="string">&amp;&amp;</span> <span class="string">go</span> <span class="string">mod</span> <span class="string">tidy</span> <span class="string">&amp;&amp;</span> <span class="string">make</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cd</span> <span class="string">../iam</span> <span class="string">&amp;&amp;</span> <span class="string">go</span> <span class="string">mod</span> <span class="string">tidy</span> <span class="string">&amp;&amp;</span> <span class="string">make</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">untracked:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 在這目錄下，執行後的檔案都會被打包起來</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./</span></span><br><span class="line">  <span class="comment"># 限制只有 develop branch 會執行此 job</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build:aws-cli:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build:aws-cli</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">amazon/aws-cli</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">$AWS_ACCESS_KEY_ID</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">$AWS_SECRET_ACCESS_KEY</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">$AWS_DEFAULT_REGION</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">untracked:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">dependencies:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build:golang</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build:node:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build:node</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">node:16</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">-g</span> <span class="string">aws-cdk@1.171.0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cdk</span> <span class="string">bootstrap</span> <span class="string">aws://$AWS_ACCOUNT_ID/$AWS_DEFAULT_REGION</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">untracked:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">dependencies:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build:aws-cli</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="看的圖吧"><a href="#看的圖吧" class="headerlink" title="看的圖吧"></a>看的圖吧</h1><ul>
+<li>當你push你的code上到master時，pipeline的stage名稱<br><img src="/notebook/./gitlab-CICD-introduce/1.png" alt="label"></li>
+<li>你可以查看你跑的Job<br><img src="/notebook/./gitlab-CICD-introduce/2.png" alt="label"></li>
+<li>你可以查看你跑的過程log<br><img src="/notebook/./gitlab-CICD-introduce/3.png" alt="label"></li>
+</ul>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>gitlab其實還有很多功能，這部分真的需要許多實戰經驗，畢竟部署時，會隨著開發所需要的環境與依賴而增加難易度，建議多看看官方文件，gitlab還有runner的用法，還有本文中也尚未提到變數的設定，這些之後再說明了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/" data-id="cl8n56o2e0005rjtw5n0nd03s" data-title="gitlab CI/CD introduce" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/notebook/How-to-using-CDK/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">How to using CDK</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

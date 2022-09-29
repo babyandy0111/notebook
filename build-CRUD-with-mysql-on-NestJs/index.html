@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>build CRUD with mysql on NestJs | Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="安裝TypeORM透過 Nest 官方支援的 TypeORM 來建立 DB。 首先安裝 TypeORM 相關的內容，並使用 typeorm init 來快速建立 typeorm 專案。   12$ yarn add @nestjs&#x2F;typeorm typeorm@0.2 mysql2$ yarn typeorm init    此時你的目錄結構會變成這樣       接著配置Mysql     1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="build CRUD with mysql on NestJs">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="安裝TypeORM透過 Nest 官方支援的 TypeORM 來建立 DB。 首先安裝 TypeORM 相關的內容，並使用 typeorm init 來快速建立 typeorm 專案。   12$ yarn add @nestjs&#x2F;typeorm typeorm@0.2 mysql2$ yarn typeorm init    此時你的目錄結構會變成這樣       接著配置Mysql     1">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/1.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/2.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/3.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/4.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/5.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/6.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/7.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/8.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/9.png">
+<meta property="article:published_time" content="2022-05-28T04:18:20.000Z">
+<meta property="article:modified_time" content="2022-09-29T04:08:18.455Z">
+<meta property="article:author" content="Andy">
+<meta property="article:tag" content="mysql crud NestJs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/1.png">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-build-CRUD-with-mysql-on-NestJs" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/build-CRUD-with-mysql-on-NestJs/" class="article-date">
+  <time class="dt-published" datetime="2022-05-28T04:18:20.000Z" itemprop="datePublished">2022-05-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      build CRUD with mysql on NestJs
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h5 id="安裝TypeORM"><a href="#安裝TypeORM" class="headerlink" title="安裝TypeORM"></a>安裝TypeORM</h5><p>透過 Nest 官方支援的 TypeORM 來建立 DB。 首先安裝 TypeORM 相關的內容，並使用 typeorm init 來快速建立 typeorm 專案。</p>
+<br>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add @nestjs/typeorm typeorm@0.2 mysql2</span><br><span class="line">$ yarn typeorm init </span><br></pre></td></tr></table></figure>
+<br>
+
+<p>此時你的目錄結構會變成這樣</p>
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/1.png" class="" title="label">
+
+
+<br>
+接著配置Mysql 
+
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 打開 app.module.ts</span></span><br><span class="line"><span class="comment">// 將typeOrmModule填入</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">TypeOrmModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user/user.module&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Module</span>(&#123;</span><br><span class="line">    <span class="attr">imports</span>: [</span><br><span class="line">        <span class="title class_">TypeOrmModule</span>.<span class="title function_">forRoot</span>(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;mysql&#x27;</span>,</span><br><span class="line">            <span class="attr">host</span>: <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">            <span class="attr">port</span>: <span class="number">3306</span>,</span><br><span class="line">            <span class="attr">username</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">            <span class="attr">password</span>: <span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">            <span class="attr">database</span>: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">            <span class="attr">autoLoadEntities</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">synchronize</span>: <span class="literal">true</span>,</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="title class_">UserModule</span>,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">controllers</span>: [],</span><br><span class="line">    <span class="attr">providers</span>: [],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Note: 這邊注意，一般來說不會直接將資料庫帳密填入，因為是DEMO，我們直接在code中配置</p>
+</blockquote>
+<br>
+
+<p>我這邊透過docker-compose啟動mysql，如果需要，可參考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/babyandy0111/dev-dnmp">Andy’s Dev Tool</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker-compose -f docker-compose.yaml up -d mysql</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="開始進行簡單的CRUD"><a href="#開始進行簡單的CRUD" class="headerlink" title="開始進行簡單的CRUD"></a>開始進行簡單的CRUD</h4><p>Nest CLI可以自動產生範本，跟許多知名的framework一樣，可以快速產生CRUD，我們就先透過這方式，並添加之前所述的API Doc描述吧。</p>
+<br>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">$ nest g resource [xxxx]</span> </span><br><span class="line"><span class="meta"># </span><span class="language-bash">xxxx 我習慣使用table name, 這邊就用user當範例吧</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">nest g resource user</span></span><br></pre></td></tr></table></figure>
+
+<br>
+CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI產生範本。
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/2.png" class="" title="lable">
+
+<p>你會看到產生了許多檔案，我會將一些檔案刪除掉，因為有些是透過typeorm init產生的，但我們並不需要，刪除後結果如下～</p>
+<br>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 你也可以手動刪除～</span></span><br><span class="line"><span class="comment"># rm -R entity/</span></span><br><span class="line"><span class="comment"># rm -R migration/</span></span><br><span class="line"><span class="comment"># rm ormconfig.json</span></span><br><span class="line"><span class="comment"># rm app.controller.ts</span></span><br><span class="line"><span class="comment"># rm app.controller.spec.ts</span></span><br><span class="line"><span class="comment"># rm app.service.ts</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/3.png" class="" title="lable">
+
+
+<br>
+
+<p>首先我們先編輯 user.entity.ts，為了示範，把基本的型態都建立一個</p>
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.entity.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Column</span>, <span class="title class_">Entity</span>, <span class="title class_">PrimaryGeneratedColumn</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Entity</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  @<span class="title class_">PrimaryGeneratedColumn</span>()</span><br><span class="line">  <span class="attr">id</span>: number;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">phone</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">age</span>: number;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">createTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">updateTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">isDelete</span>: boolean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>接著我們修改一下dto，這邊有兩個檔案，一個是新增一個是更新。<br>dto，因為api的request需要要進行驗證～所以我們先安裝一下所需套件 </p>
+<br>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">yarn add class-validator class-transformer</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create-user.dto.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IsNotEmpty</span>, <span class="title class_">IsOptional</span>, <span class="title class_">IsString</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Column</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CreateUserDto</span> &#123;</span><br><span class="line">    @<span class="title class_">IsString</span>()</span><br><span class="line">    @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">    <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">IsString</span>()</span><br><span class="line">    @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">    <span class="attr">phone</span>: string;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">    <span class="attr">age</span>: number;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    <span class="attr">createTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    <span class="attr">updateTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    @<span class="title class_">IsOptional</span>()</span><br><span class="line">    <span class="attr">isDelete</span>: boolean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>編輯module</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.module.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserController</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.controller&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">TypeOrmModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">User</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./entities/user.entity&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Module</span>(&#123;</span><br><span class="line">    <span class="attr">imports</span>: [<span class="title class_">TypeOrmModule</span>.<span class="title function_">forFeature</span>([<span class="title class_">User</span>])], <span class="comment">// 將entity填入</span></span><br><span class="line">    <span class="attr">controllers</span>: [<span class="title class_">UserController</span>],</span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">UserService</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>這時候我們重新啟動一下，就會看到db裡面幫你建立了user table，且裡面的欄位都建立好了，而針對User的CRUD的路由也都出現了唷～</p>
+<br>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">yarn start:dev</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/4.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/5.png" class="" title="lable">
+
+<br>
+
+<p>接下來修改一下service拉，準備把Repository注入 </p>
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CreateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/create-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UpdateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/update-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">InjectRepository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">User</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./entities/user.entity&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Repository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">    @InjectRepository(User) private userRepository: Repository&lt;User&gt;,</span></span><br><span class="line"><span class="params">  </span>) &#123;&#125;</span><br><span class="line">  <span class="title function_">create</span>(<span class="params">createUserDto: CreateUserDto</span>) &#123;</span><br><span class="line">    createUserDto.<span class="property">createTime</span> = createUserDto.<span class="property">updateTime</span> = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">    createUserDto.<span class="property">isDelete</span> = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">save</span>(createUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">find</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">findOne</span>(<span class="params">id: number</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">findByIds</span>([id]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">update</span>(<span class="params">id: number, updateUserDto: UpdateUserDto</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">update</span>(id, updateUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">remove</span>(<span class="params">id: number</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">delete</span>(id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下來為了API DOC進行小微調，controller 的微調是為了定義DOC的描述和指定dto，這邊就進行POST的示範</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.controller.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">Controller</span>,</span><br><span class="line">  <span class="title class_">Get</span>,</span><br><span class="line">  <span class="title class_">Post</span>,</span><br><span class="line">  <span class="title class_">Body</span>,</span><br><span class="line">  <span class="title class_">Patch</span>,</span><br><span class="line">  <span class="title class_">Param</span>,</span><br><span class="line">  <span class="title class_">Delete</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CreateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/create-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UpdateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/update-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">ApiOperation</span>,</span><br><span class="line">  <span class="title class_">ApiTags</span>,</span><br><span class="line">  <span class="title class_">ApiQuery</span>,</span><br><span class="line">  <span class="title class_">ApiBody</span>,</span><br><span class="line">  <span class="title class_">ApiResponse</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Controller</span>(<span class="string">&#x27;user&#x27;</span>)</span><br><span class="line">@<span class="title class_">ApiTags</span>(<span class="string">&#x27;User&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private readonly userService: UserService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Post</span>()</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;新增一筆user使用&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;新增user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">create</span>(<span class="params">@Body() createUserDto: CreateUserDto</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">create</span>(createUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Get</span>()</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;取得user使用&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;取得user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">findAll</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Get</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;獲取一個user&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;獲取一個user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">findOne</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">findOne</span>(+id);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Patch</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;更新user&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">UpdateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;更新user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">update</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string, @Body() updateUserDto: UpdateUserDto</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">update</span>(+id, updateUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Delete</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;刪除user&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;刪除user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">remove</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">remove</span>(+id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<br>
+
+<p>dto也要進行微調，dto的微調是為了進行參數驗證</p>
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create-user.dto.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IsNotEmpty</span>, <span class="title class_">IsOptional</span>, <span class="title class_">IsString</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Column</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiProperty</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CreateUserDto</span> &#123;</span><br><span class="line">  @<span class="title class_">IsString</span>()</span><br><span class="line">  @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">  @<span class="title class_">ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;姓名&#x27;</span> &#125;)</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">IsString</span>()</span><br><span class="line">  @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">  @<span class="title class_">ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;手機&#x27;</span> &#125;)</span><br><span class="line">  <span class="attr">phone</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">  @<span class="title class_">ApiProperty</span>(&#123;</span><br><span class="line">    <span class="attr">description</span>: <span class="string">&#x27;年齡&#x27;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">    <span class="attr">minimum</span>: <span class="number">18</span>,</span><br><span class="line">    <span class="attr">default</span>: <span class="number">20</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="attr">age</span>: number;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">createTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">updateTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  @<span class="title class_">IsOptional</span>()</span><br><span class="line">  <span class="attr">isDelete</span>: boolean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>透過API DOC新增一筆資料～並確認～</p>
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/6.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/7.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/8.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/9.png" class="" title="lable">
+
+<br>
+
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>透過NestJs可以快速產生CRUD，以及API DOC，算是頗方便的～其實還有很多東西可以說，例如Auth和其他重要功能，這之後有空再說吧～</p>
+<br>
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.nestjs.com/">nestjs doc</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/babyandy0111/nestjs-demo">完整的範例code</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/" data-id="cl8n56o210001rjtwbmdn8b34" data-title="build CRUD with mysql on NestJs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/notebook/how-to-build-nestjs-on-eks-fargate/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          how to build nestjs on eks fargate
+        
+      </div>
+    </a>
+  
+  
+    <a href="/notebook/how-to-using-swagger-on-NestJs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">how to using swagger on NestJs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

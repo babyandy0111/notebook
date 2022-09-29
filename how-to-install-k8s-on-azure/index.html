@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>how to install k8s on azure | Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="使用azure的doc範例 基本上照著做應該不會有問題   先把azure的範例抓下來，並且進行build123$ git clone https:&#x2F;&#x2F;github.com&#x2F;Azure-Samples&#x2F;azure-voting-app-redis.git$ cd azure-voting-app-redis$ docker-compose up -d  使用瀏覽器測試一下，輸入http:loca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="how to install k8s on azure">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="使用azure的doc範例 基本上照著做應該不會有問題   先把azure的範例抓下來，並且進行build123$ git clone https:&#x2F;&#x2F;github.com&#x2F;Azure-Samples&#x2F;azure-voting-app-redis.git$ cd azure-voting-app-redis$ docker-compose up -d  使用瀏覽器測試一下，輸入http:loca">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/1.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/2.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/5.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/6.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/7.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/8.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/9.png">
+<meta property="article:published_time" content="2022-05-24T04:40:11.000Z">
+<meta property="article:modified_time" content="2022-09-29T04:08:18.516Z">
+<meta property="article:author" content="Andy">
+<meta property="article:tag" content="azure k8s cluster">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/1.png">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-how-to-install-k8s-on-azure" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-k8s-on-azure/" class="article-date">
+  <time class="dt-published" datetime="2022-05-24T04:40:11.000Z" itemprop="datePublished">2022-05-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/azure/">azure</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      how to install k8s on azure
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>使用azure的doc範例</li>
+<li>基本上照著做應該不會有問題</li>
+</ul>
+<ol>
+<li>先把azure的範例抓下來，並且進行build<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Azure-Samples/azure-voting-app-redis.git</span><br><span class="line">$ <span class="built_in">cd</span> azure-voting-app-redis</span><br><span class="line">$ docker-compose up -d</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>使用瀏覽器測試一下，輸入http:localhost:8080 <br></p>
+<img src="/notebook/how-to-install-k8s-on-azure/1.png" class="" title="label">
+
+<p>然後你也會看到三個image，這是後續需要用到的image，準備上傳到ACR</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line">mcr.microsoft.com/azuredocs/azure-vote-front</span><br><span class="line">mcr.microsoft.com/oss/bitnami/redis</span><br><span class="line">tiangolo/uwsgi-nginx-flask </span><br></pre></td></tr></table></figure>
+
+<h1 id="建立ACR"><a href="#建立ACR" class="headerlink" title="建立ACR"></a>建立ACR</h1><ol>
+<li><p>先建立group，下面指令會在 eastus 區域中建立名為 myResourceGroup 的資源群組</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ az group create --name andy-lab --location eastus</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;id&quot;</span>: <span class="string">&quot;/subscriptions/cd4e3d37-eaae-493b-886f-436bc6012f4d/resourceGroups/andy-lab&quot;</span>,</span><br><span class="line">  <span class="string">&quot;location&quot;</span>: <span class="string">&quot;eastasia&quot;</span>,</span><br><span class="line">  <span class="string">&quot;managedBy&quot;</span>: null,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;andy-lab&quot;</span>,</span><br><span class="line">  <span class="string">&quot;properties&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;provisioningState&quot;</span>: <span class="string">&quot;Succeeded&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;tags&quot;</span>: null,</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Microsoft.Resources/resourceGroups&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 az acr create 命令建立 Azure Container Registry 執行個體，並提供您自己的登錄名稱。 登錄名稱在 Azure 內必須是唯一的，且包含 5-50 個英數字元。這邊取名叫 acrtest。</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ az acr create -n andylabar -g andy-lab -l eastasia --sku basic</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;adminUserEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;anonymousPullEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;creationDate&quot;</span>: <span class="string">&quot;2022-05-24T03:01:43.942760+00:00&quot;</span>,</span><br><span class="line">  <span class="string">&quot;dataEndpointEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;dataEndpointHostNames&quot;</span>: [],</span><br><span class="line">  <span class="string">&quot;encryption&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;keyVaultProperties&quot;</span>: null,</span><br><span class="line">    <span class="string">&quot;status&quot;</span>: <span class="string">&quot;disabled&quot;</span></span><br><span class="line">  &#125; ... 以下省略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以確認一下是否建立成功了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ az acr list -o table</span><br></pre></td></tr></table></figure>
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/2.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/5.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/6.png" class="" title="label">
+
+<br>
+
+<ol start="3">
+<li>準備上傳你的image</li>
+</ol>
+<p>要使用ACR前必須透過使用命令登入 ACR</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ az acr login -n andylabar</span><br><span class="line">Login Succeeded</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>透過acr list找出acrLoginServer</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ az acr list --resource-group andy-lab --query <span class="string">&quot;[].&#123;acrLoginServer:loginServer&#125;&quot;</span> --output table</span><br><span class="line">AcrLoginServer</span><br><span class="line">--------------------</span><br><span class="line">andylabar.azurecr.io</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>上傳image</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 andylabar.azurecr.io/azure-vote-front:v1</span><br><span class="line"></span><br><span class="line">$ docker push andylabar.azurecr.io/azure-vote-front:v1</span><br><span class="line"></span><br><span class="line">$ az acr repository list --name andylabar --output table</span><br><span class="line">Result</span><br><span class="line">----------------</span><br><span class="line">azure-vote-front</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ol start="4">
+<li>開始建立k8s集群到azure，需等待一段時間</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">az aks create \</span><br><span class="line">    --resource-group andy-lab \</span><br><span class="line">    --name andyAKSCluster \</span><br><span class="line">    --node-count 2 \</span><br><span class="line">    --generate-ssh-keys \</span><br><span class="line">    --attach-acr andylabar</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ol start="5">
+<li>登入集群<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ az aks get-credentials --resource-group andy-lab --name andyAKSCluster</span><br><span class="line">Merged <span class="string">&quot;andyAKSCluster&quot;</span> as current context <span class="keyword">in</span> /Users/andywang/.kube/config</span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<ol start="6">
+<li>透過指令確認你本機的cluster是否建立<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config get-clusters</span><br><span class="line">NAME</span><br><span class="line">andyAKSCluster</span><br><span class="line">andy-lab.us-east-2.eksctl.io</span><br><span class="line">arn:aws:eks:us-east-2:185271018684:cluster/andy-lab</span><br><span class="line">docker-desktop</span><br><span class="line">test-cluster.us-east-2.eksctl.io</span><br><span class="line">arn:aws:eks:us-east-2:185271018684:cluster/test-cluster</span><br></pre></td></tr></table></figure>
+<br></li>
+</ol>
+<img src="/notebook/how-to-install-k8s-on-azure/7.png" class="" title="label">
+
+<blockquote>
+<p>Note: 如果你要切換cluster，請執行 kubectl config set current-context [cluster name]</p>
+</blockquote>
+<br>
+
+<ol start="7">
+<li>將image部署到AKS上了<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">containers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">azure-vote-front</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">mcr.microsoft.com/azuredocs/azure-vote-front:v1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 改成你自己的acr</span></span><br><span class="line"><span class="attr">containers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">azure-vote-front</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">andylabar.azurecr.io/azure-vote-front:v1</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f azure-vote-all-in-one-redis.yaml</span><br><span class="line">deployment.apps/azure-vote-back created</span><br><span class="line">service/azure-vote-back created</span><br><span class="line">deployment.apps/azure-vote-front created</span><br><span class="line">service/azure-vote-front created</span><br></pre></td></tr></table></figure>
+<br>
+
+<ol start="8">
+<li>測試自己的應用程式<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get service azure-vote-front</span><br></pre></td></tr></table></figure>
+<br></li>
+</ol>
+<img src="/notebook/how-to-install-k8s-on-azure/8.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/9.png" class="" title="label">
+
+
+<h1 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.microsoft.com/zh-tw/azure/aks/tutorial-kubernetes-prepare-app">azure k8s</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/" data-id="cl8n56o42000zrjtwc1uz6vpk" data-title="how to install k8s on azure" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/notebook/how-to-install-NestJs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          how to install NestJs
+        
+      </div>
+    </a>
+  
+  
+    <a href="/notebook/how-to-install-azure-cli/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">how to install azure cli</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

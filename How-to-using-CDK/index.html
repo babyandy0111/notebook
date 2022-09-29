@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>How to using CDK | Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="什麼是ＣＤＫCDK 是 AWS Cloud Development Kit (AWS CDK) 是一套開源軟體開發架構，使用熟悉的程式設計語言定義您的雲端應用程式資源。 早期佈建雲端應用程式可能是具有挑戰性的過程，需要透過手動操作、撰寫自訂指令碼、維護範本或學習特定領域的語言。AWS CDK 使用程式設計語言的熟悉性和表達能力，幫助應用程式進行模型分析。 它提供的高階元件 (稱為建構) 可利用經過">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to using CDK">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/How-to-using-CDK/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="什麼是ＣＤＫCDK 是 AWS Cloud Development Kit (AWS CDK) 是一套開源軟體開發架構，使用熟悉的程式設計語言定義您的雲端應用程式資源。 早期佈建雲端應用程式可能是具有挑戰性的過程，需要透過手動操作、撰寫自訂指令碼、維護範本或學習特定領域的語言。AWS CDK 使用程式設計語言的熟悉性和表達能力，幫助應用程式進行模型分析。 它提供的高階元件 (稱為建構) 可利用經過">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://storage.googleapis.com/andy.gaiatechs.info/1.png">
+<meta property="og:image" content="https://i.imgur.com/v3duvIo.png">
+<meta property="article:published_time" content="2022-09-20T08:53:13.000Z">
+<meta property="article:modified_time" content="2022-09-29T04:08:18.455Z">
+<meta property="article:author" content="Andy">
+<meta property="article:tag" content="cdk, aws, node, cloudWatch, eventBridge, lambda">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://storage.googleapis.com/andy.gaiatechs.info/1.png">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-How-to-using-CDK" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/How-to-using-CDK/" class="article-date">
+  <time class="dt-published" datetime="2022-09-20T08:53:13.000Z" itemprop="datePublished">2022-09-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/aws/">aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      How to using CDK
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="什麼是CDK"><a href="#什麼是CDK" class="headerlink" title="什麼是ＣＤＫ"></a>什麼是ＣＤＫ</h1><p>CDK 是 AWS Cloud Development Kit (AWS CDK) 是一套開源軟體開發架構，使用熟悉的程式設計語言定義您的雲端應用程式資源。</p>
+<p>早期佈建雲端應用程式可能是具有挑戰性的過程，需要透過手動操作、撰寫自訂指令碼、維護範本或學習特定領域的語言。AWS CDK 使用程式設計語言的熟悉性和表達能力，幫助應用程式進行模型分析。</p>
+<p>它提供的高階元件 (稱為建構) 可利用經過驗證的預設值預先設定雲端資源，因此，您可以輕鬆建置雲端應用程式。AWS CDK 透過 AWS CloudFormation，以安全、可重複的方式佈建您的資源。它也讓您能夠編寫和分享自己的自訂建構，以整合組織的需求，協助您加快新專案。</p>
+<h1 id="CDK-支援哪些語言"><a href="#CDK-支援哪些語言" class="headerlink" title="CDK 支援哪些語言"></a>CDK 支援哪些語言</h1><p>目前CDK已經出到V2的版本，透過doc能夠知道，CDK支援了Python、.Net、Go、Java、TypeScript，從這點來看，比較起Terraform 的自定義語言，CDK提供了不同的撰寫語言，讓開發者使用自己所熟悉的語言撰寫IaC，這點真是大大的降低學習成本，那使用Terraform難道就活該倒楣嗎？不～針對偏好使用 Terraform 的客戶，cdktf 提供以 TypeScript 和 Python 定義 Terraform HCL 狀態檔案的 CDK 建構。</p>
+<h1 id="CDK8s"><a href="#CDK8s" class="headerlink" title="CDK8s"></a>CDK8s</h1><p>對於 Kubernetes 使用者，cdk8s 專案可讓您使用 CDK 建構在 TypeScript、Python 和 Java 中定義 Kubernetes 組態。超級方便～</p>
+<h1 id="一切都從官網開始"><a href="#一切都從官網開始" class="headerlink" title="一切都從官網開始"></a>一切都從官網開始</h1><p>第一次學習CDK的人可以使用以下兩個官網，稍微看看，了解CDK能夠做到哪些事情<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cdk/api/v2/">cdk doc</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hashicorp/terraform-cdk">cdkf</a></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>小編這次因內部需求所需，需將AWS Support 所開立的CASE同步到自己的內部系統上，因此使用CDK作為IaC的主要工具，並以golang作為lambda的語言，以下為本次實作架構，另外，小編使用的電腦為MAC，如果是Windows就抱歉拉，如果需要Windows，歡迎敲碗～</p>
+<p><img src="https://storage.googleapis.com/andy.gaiatechs.info/1.png" alt="架構"></p>
+<h1 id="建立CDK專案前的準備"><a href="#建立CDK專案前的準備" class="headerlink" title="建立CDK專案前的準備"></a>建立CDK專案前的準備</h1><ol>
+<li><p>安裝 Node 和 NPM, 若你的安裝或升級過程遇到權限問題, 可能會用到sudo, 需要鍵入 superuser password<br><code>$ brew install node</code><br><code>$ npm install -g aws-cdk</code></p>
+</li>
+<li><p>安裝 golang<br><code>$ brew install go </code></p>
+</li>
+<li><p>安裝AWS CLI<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">下載CLI V2</a></p>
+</li>
+<li><p>生成Access Key ID &amp; Secret Access Key，建議大家可以建立一個IAM 的 group，然後把新創建的user加入群組</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br><span class="line"></span><br><span class="line">#VARs</span><br><span class="line">username=$1</span><br><span class="line">group=&quot;admin-group&quot;</span><br><span class="line">password=`openssl rand -base64 32`</span><br><span class="line"></span><br><span class="line">#create user with password then add user into a group and create ak and sk</span><br><span class="line">echo &quot;User: $username Password: $password&quot;</span><br><span class="line">aws iam create-user --user-name $username --tags Key=Org,Value=Support Key=CreatedBy,Value=awscli</span><br><span class="line">aws iam create-login-profile --user-name $1 --password $password --password-reset-required</span><br><span class="line">aws iam add-user-to-group --user-name $username --group-name $group</span><br><span class="line">aws iam create-access-key --user-name $username</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>設定 AWS CLI<br><code>$ aws configure</code></p>
+<figure class="highlight plaintext"><figcaption><span>Access Key ID [None]: ANOTREALACCESSKEYID</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AWS Secret Access Key [None]: ANOTREALSECRETACCESSKEY</span><br><span class="line">Default region name [None]: eu-east-1</span><br><span class="line">Default output format [None]: json</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>進行CDK初始化, 需要先得知”Account”跟”Region”的資訊, 從上一個步驟你知道了”Region”, Account的資訊由下面的<code>aws sts get-caller-identity</code>指令得到, Account 的數值是由一串數字組成.<br><code>$ aws sts get-caller-identity</code><br><code>$ cdk bootstrap aws://[ACCOUNT-NUMBER]/[REGION]</code></p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">⏳ Bootstrapping environment aws://123456789012/us-east-1...</span><br><span class="line">CDKToolkit: creating CloudFormation changeset...</span><br><span class="line"></span><br><span class="line">✅  Environment aws://123456789012/us-east-1 bootstrapped.</span><br></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p>‘—cloudformation-execution-policies’ 是允許cloudformation可以執行時使用的IAM policy, 根據the priciple of least privilege, AWS 建議用戶可以另外指定, 上述的做法會以目前用戶擁有的權限給cloudformation 使用.</p>
+</blockquote>
+<blockquote>
+<p>記得替換參數，指令下完後，你會看到正在初始化專案～</p>
+</blockquote>
+<blockquote>
+<p>上方的軟體安裝均可以使用Docker，不過如果你是初學，建議直接安裝於MAC身上，看這人習慣，這邊就不贅述，小編我是直接安裝MAC上，方便開發。AWS的key也可以手動生成，看個人習慣。</p>
+</blockquote>
+<h1 id="安裝建立CDK專案"><a href="#安裝建立CDK專案" class="headerlink" title="安裝建立CDK專案"></a>安裝建立CDK專案</h1><p>準備好以上就可以透過指令產生CDK預設專案拉～</p>
+<p><code>$ mkdir cdk-demo</code><br><code>$ cd cdk-demo</code><br><code>$ cdk init --language typescript</code></p>
+<pre><code>├── bin
+│   └── cdk-demo.ts
+├── cdk.json
+├── jest.config.js
+├── lib
+│   └── cdk-demo-stack.ts
+├── package.json
+├── package-lock.json
+├── README.md
+├── test
+│   └── cdk-demo.test.ts
+└── tsconfig.json
+</code></pre>
+<blockquote>
+<p>以下是一些重要檔案及其用途：</p>
+</blockquote>
+<ul>
+<li><p>bin&#x2F;cdk-project.ts - 這是進入 CDK 應用程式的途徑。此檔案將會載入&#x2F;建立我們在 lib&#x2F;* 底下定義的所有堆疊</p>
+</li>
+<li><p>lib&#x2F;cdk-project-stack.ts - 這是主要的 CDK 應用程式堆疊的定義之處。資源及其屬性可存放於此處。</p>
+</li>
+<li><p>package.json - 您會在此處定義專案相依性，以及一些額外資訊和建置指令碼 (npm build、npm test、npm watch)。</p>
+</li>
+<li><p>cdk.json - 此檔案會向工具組指出如何執行你的應用程式，以及與 CDK 和你的專案相關的一些額外設定和參數。</p>
+</li>
+</ul>
+<p>我們將著重於 lib&#x2F;cdk-demo-stack.ts 和 bin&#x2F;cdk-demo.ts 檔案，以建立我們的基礎設施。我們將新增一段程式碼。</p>
+<h1 id="修改-bin-x2F-cdk-demo-ts"><a href="#修改-bin-x2F-cdk-demo-ts" class="headerlink" title="修改 bin&#x2F;cdk-demo.ts"></a>修改 bin&#x2F;cdk-demo.ts</h1><p>使其顯示如下。請務必將您的 AWS 帳戶 ID 取代為正確的號碼，並選擇正確的區域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;source-map-support/register&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CdkDemoStack</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../lib/cdk-demo-stack&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> cdk.<span class="title class_">App</span>();</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">CdkDemoStack</span>(app, <span class="string">&#x27;CdkDemoStack&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">env</span>: &#123; <span class="attr">account</span>: <span class="string">&#x27;123456789012&#x27;</span>, <span class="attr">region</span>: <span class="string">&#x27;eu-west-1&#x27;</span> &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="接著修改-lib-x2F-cdk-demo-stack-ts"><a href="#接著修改-lib-x2F-cdk-demo-stack-ts" class="headerlink" title="接著修改 lib&#x2F;cdk-demo-stack.ts"></a>接著修改 lib&#x2F;cdk-demo-stack.ts</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> lambda <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-lambda&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> iam <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-iam&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> events <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-events&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> logs <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-logs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> targets <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-events-targets&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> assets <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-s3-assets&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CdkDemoStack</span> <span class="keyword">extends</span> <span class="title class_ inherited__">cdk.Stack</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">scope: cdk.Construct, id: string, props?: cdk.StackProps</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(scope, id, props);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Policy</span></span><br><span class="line">    <span class="keyword">const</span> supportPolicy = <span class="keyword">new</span> iam.<span class="title class_">PolicyStatement</span>(&#123;</span><br><span class="line">      <span class="attr">actions</span>: [<span class="string">&#x27;support:*&#x27;</span>],</span><br><span class="line">      <span class="attr">resources</span>: [<span class="string">&#x27;*&#x27;</span>],</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// lambda</span></span><br><span class="line">    <span class="keyword">const</span> demoLambdaAsset = <span class="keyword">new</span> assets.<span class="title class_">Asset</span>(<span class="variable language_">this</span>, <span class="string">&quot;GoServerLambdaFnZip&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">path</span>: path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;../lambda&quot;</span>),</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// seting lambda and env </span></span><br><span class="line">    <span class="keyword">const</span> demoLambda = <span class="keyword">new</span> lambda.<span class="title class_">Function</span>(<span class="variable language_">this</span>, <span class="string">&#x27;msp&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">runtime</span>: lambda.<span class="property">Runtime</span>.<span class="property">GO_1_X</span>,</span><br><span class="line">      <span class="attr">timeout</span>: cdk.<span class="property">Duration</span>.<span class="title function_">seconds</span>(<span class="number">300</span>),</span><br><span class="line">      <span class="attr">handler</span>: <span class="string">&quot;main&quot;</span>,</span><br><span class="line">      <span class="attr">code</span>: lambda.<span class="property">Code</span>.<span class="title function_">fromBucket</span>(</span><br><span class="line">        demoLambdaAsset.<span class="property">bucket</span>,</span><br><span class="line">        demoLambdaAsset.<span class="property">s3ObjectKey</span></span><br><span class="line">      ),</span><br><span class="line">      <span class="attr">environment</span>: &#123;</span><br><span class="line">        <span class="attr">region</span>: cdk.<span class="property">Stack</span>.<span class="title function_">of</span>(<span class="variable language_">this</span>).<span class="property">region</span>,</span><br><span class="line">        <span class="attr">zones</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(cdk.<span class="property">Stack</span>.<span class="title function_">of</span>(<span class="variable language_">this</span>).<span class="property">availabilityZones</span>),</span><br><span class="line">        <span class="attr">endpoint</span>: <span class="string">&#x27;endpoint&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add policy</span></span><br><span class="line">    mspLambda.<span class="property">role</span>?.<span class="title function_">attachInlinePolicy</span>(</span><br><span class="line">      <span class="keyword">new</span> iam.<span class="title class_">Policy</span>(<span class="variable language_">this</span>, <span class="string">&#x27;demoSupportPolicy&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">statements</span>: [supportPolicy],</span><br><span class="line">      &#125;),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment">// cloudwatch log group</span></span><br><span class="line">    <span class="keyword">const</span> logGroup = <span class="keyword">new</span> logs.<span class="title class_">LogGroup</span>(<span class="variable language_">this</span>, <span class="string">&#x27;demoLogGroup&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">logGroupName</span>: <span class="string">&#x27;demoLogGroup&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add eventBridge</span></span><br><span class="line">    <span class="keyword">const</span> demoEventRule = <span class="keyword">new</span> events.<span class="title class_">Rule</span>(<span class="variable language_">this</span>, <span class="string">&#x27;demoRule&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">eventPattern</span>: &#123;</span><br><span class="line">        <span class="attr">source</span>: [<span class="string">&quot;aws.support&quot;</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add lambda for eventBridge&#x27;s target</span></span><br><span class="line">    demoEventRule.<span class="title function_">addTarget</span>(<span class="keyword">new</span> targets.<span class="title class_">CloudWatchLogGroup</span>(logGroup))</span><br><span class="line">    demoEventRule.<span class="title function_">addTarget</span>(<span class="keyword">new</span> targets.<span class="title class_">LambdaFunction</span>(demoLambda))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果遇到import時找不到套件，記得安裝一下，例如 $ npm install @aws-cdk&#x2F;aws-events</p>
+</blockquote>
+<h1 id="撰寫lambda"><a href="#撰寫lambda" class="headerlink" title="撰寫lambda"></a>撰寫lambda</h1><ol>
+<li><p>建立一個資料夾<br>$ mkdir lambda</p>
+</li>
+<li><p>建立main.go<br>$ touch main.go</p>
+</li>
+<li><p>寫code</p>
+</li>
+</ol>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"> <span class="string">&quot;context&quot;</span></span><br><span class="line"> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"> <span class="string">&quot;log&quot;</span></span><br><span class="line"> <span class="string">&quot;os&quot;</span></span><br><span class="line"></span><br><span class="line"> <span class="string">&quot;github.com/aws/aws-lambda-go/events&quot;</span></span><br><span class="line"> <span class="string">&quot;github.com/aws/aws-lambda-go/lambda&quot;</span></span><br><span class="line"> <span class="string">&quot;github.com/joho/godotenv&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> lambda.Start(HandleRequest)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HandleRequest</span><span class="params">(_ context.Context, event events.CloudWatchEvent)</span></span> <span class="type">error</span> &#123;</span><br><span class="line"> err := godotenv.Load()</span><br><span class="line"> <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  log.Fatal(<span class="string">&quot;Error loading .env file&quot;</span>)</span><br><span class="line"> &#125;</span><br><span class="line"> region := os.Getenv(<span class="string">&quot;region&quot;</span>)</span><br><span class="line"> zones := os.Getenv(<span class="string">&quot;zones&quot;</span>)</span><br><span class="line"> iam_endpoint := os.Getenv(<span class="string">&quot;iam_endpoint&quot;</span>)</span><br><span class="line"></span><br><span class="line"> fmt.Println(<span class="string">&quot;env region:&quot;</span>, region)</span><br><span class="line"> fmt.Println(<span class="string">&quot;env zones:&quot;</span>, zones)</span><br><span class="line"> fmt.Println(<span class="string">&quot;env endpoint:&quot;</span>, iam_endpoint)</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 接收到值後，寫你想要做的事情</span></span><br><span class="line"> fmt.Printf(<span class="string">&quot;PRINT: %#v\n&quot;</span>, event)</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<ol start="4">
+<li>一開始需要進行初始化並且載入相關套件<br><code>$ go mod init main &amp;&amp; go mod tidy</code></li>
+</ol>
+<blockquote>
+<p>這邊golang的code單純進行print cloudwatch的值，且該lambda已經獲得aws.support的權限了，至於要做怎樣的操作，可自由發揮</p>
+</blockquote>
+<h1 id="開始部署嚕"><a href="#開始部署嚕" class="headerlink" title="開始部署嚕"></a>開始部署嚕</h1><ul>
+<li><p>確認您的程式碼是否有效<br><code>$ npm run build</code></p>
+</li>
+<li><p>確認最終產生的CloudFormation是否正確<br><code>$ cdk sync</code></p>
+<blockquote>
+<p>沒意外你會看到一堆很噁心的CloudFormation，你就會知道CDK其實只是幫你產生CloudFormation的yaml來執行而已～</p>
+</blockquote>
+</li>
+<li><p>部署<br><code>$ cdk deploy</code></p>
+  <figure class="highlight plaintext"><figcaption><span>deploying...</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CdkDemoStack: creating CloudFormation changeset...</span><br><span class="line">[··························································] (0/13)</span><br><span class="line"></span><br><span class="line">3:50:17 PM | CREATE_IN_PROGRESS   | AWS::CloudFormation::Stack            | CdkDemoStack</span><br><span class="line">3:50:21 PM | CREATE_IN_PROGRESS   | AWS::EC2::InternetGateway             | MainVpc/IGW</span><br><span class="line">3:50:21 PM | CREATE_IN_PROGRESS   | AWS::EC2::VPC                         | MainVpc</span><br><span class="line">3:50:22 PM | CREATE_IN_PROGRESS   | AWS::CDK::Metadata                    | CDKMetadata/Default</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>礙於小編公司內部資訊不能透露，這邊顯示示意圖～ 只要看到 ✅  就對了</p>
+</blockquote>
+</li>
+</ul>
+<p>幾分鐘後，您應該會看到一個綠色的勾號，以及新建 CloudFormation 堆疊的 ARN (Amazon 資源名稱)。</p>
+<h1 id="測試一下是否成功了"><a href="#測試一下是否成功了" class="headerlink" title="測試一下是否成功了"></a>測試一下是否成功了</h1><p>如果有購買AWS Support就可以去Support建立一張CASE，屆時你就會在cloudwatch中看到log，而由於EventBridge的Target是lambda，因此會觸發你所設置的lambda，也會看到lambda中的log唷。</p>
+<p><img src="https://i.imgur.com/v3duvIo.png"></p>
+<h1 id="將資源刪除"><a href="#將資源刪除" class="headerlink" title="將資源刪除"></a>將資源刪除</h1><p>這就不多廢話，試完了，如果不想要保留，當然要刪除它，直接 $ cdk destroy</p>
+<pre><code>Are you sure you want to delete: CdkEcsInfraStack (y/n)? y
+CdkEcsInfraStack: destroying...
+
+✅  CdkEcsInfraStack: destroyed
+</code></pre>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>CDK真的很方便，可以讓工程們使用自己擅長的語言進行Iac的開發，將CDK納入自己的技能樹，絕對有很大的幫助。</p>
+<h1 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html">aws cdk</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cdk/api/v2/">aws cdk doc</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/iam/create-login-profile.html">create-login-profile</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/iam/create-user.html">create-user</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/iam/add-user-to-group.html">add-user-to-group</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/How-to-using-CDK/" data-id="cl8n56o3b000nrjtw3yax1c85" data-title="How to using CDK" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/notebook/gitlab-CICD-introduce/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          gitlab CI/CD introduce
+        
+      </div>
+    </a>
+  
+  
+    <a href="/notebook/how-to-build-Static-Website-on-gcs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">how to build Static Website on gcs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

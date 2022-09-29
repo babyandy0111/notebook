@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Hello Word~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andy&#39;s NoteBook">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/page/2/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="Hello Word~">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:author" content="Andy">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-how-to-install-k8s-on-aws" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-k8s-on-aws/" class="article-date">
+  <time class="dt-published" datetime="2022-05-23T04:40:11.000Z" itemprop="datePublished">2022-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/aws/">aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-k8s-on-aws/">how to install k8s on aws</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="install-k8s-on-aws"><a href="#install-k8s-on-aws" class="headerlink" title="install k8s on aws"></a>install k8s on aws</h1><p>AWS安裝集群有很多種方式，今天教大家使用eksctl進行部署集群，其中部署集群的Node有分linux或者Fargate，不管是哪種部署，都是很方便的。</p>
+<ul>
+<li>AWS Fargate 是一項技術，可以與 Amazon ECS 搭配使用以執行容器，而不需管理 Amazon EC2 執行個體的伺服器或叢集。使用 Fargate，就不再需要佈建、設定或擴展虛擬機器的叢集來執行容器。這樣一來即無須選擇伺服器類型、決定何時擴展叢集，或最佳化叢集壓縮。</li>
+<li>Linux就是使用EC2去建立你的Node，這邊就不贅述。</li>
+<li>Note: Fargate 特性關係，就無法使用 Daemonset</li>
+</ul>
+<br>
+記得要先安裝好 eksctl 和 kubectl <br>
+如果都已安裝好了，那就開始建立cluster吧
+<br>
+
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ eksctl create cluster <span class="comment"># 建立cluster</span></span><br><span class="line">--name test-cluster <span class="comment"># cluster 名稱</span></span><br><span class="line">--nodegroup-name test-nodes <span class="comment"># 指定 aws-node 的群組名稱</span></span><br><span class="line">--node-type t3.small <span class="comment"># 指定工作者節點使用的執行個體類型</span></span><br><span class="line">--nodes 3 <span class="comment"># 指定node數量</span></span><br><span class="line">--nodes-min 1 <span class="comment">#針對節點群組設定 Amazon EC2 Autoscaling 組態中的節點數目下限</span></span><br><span class="line">--nodes-max 4 <span class="comment">#針對節點群組設定 Amazon EC2 Autoscaling 組態中的節點數目上限</span></span><br><span class="line">--managed <span class="comment"># 建立 Amazon EKS 受管節點群組</span></span><br><span class="line">--version 1.20 <span class="comment"># 指定K8S版本</span></span><br><span class="line">--region us-east-2 <span class="comment"># AWS 區域</span></span><br><span class="line"><span class="comment"># --fargate # 如果你要建立fargate類型，請多加 --fargate</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<blockquote>
+<p>Note: 命令執行i 會在你的本機下 ~&#x2F;.kube&#x2F;config 建立組態檔案，也稱為 kubeconfig。kubeconfig 包含有關 Amazon EKS 叢集的詳細資訊，包括叢集名稱和身分驗證方法</p>
+</blockquote>
+<br>
+
+<h1 id="等待並確認是否安裝cluster成功"><a href="#等待並確認是否安裝cluster成功" class="headerlink" title="等待並確認是否安裝cluster成功"></a>等待並確認是否安裝cluster成功</h1><p>開始建立 <br></p>
+<img src="/notebook/how-to-install-k8s-on-aws/1.png" class="" title="label">
+
+<br>
+
+<p>你會看到你的EKS建立一個新的集群出來了 <br></p>
+<img src="/notebook/how-to-install-k8s-on-aws/2.png" class="" title="label">
+
+
+<br>
+
+<p>點選cluster進去，會看到node是你所開的機器類型 <br></p>
+<img src="/notebook/how-to-install-k8s-on-aws/3.png" class="" title="label">
+
+<br>
+
+<p>再到EC2就會看到你剛建立的group <br><br>如果你建立的是fargate類型，那就不會看到EC2開立<br></p>
+<img src="/notebook/how-to-install-k8s-on-aws/4.png" class="" title="label">
+
+<p>基本上以上確認就算是成功了～接下來我們來試試看一個簡單的例子，放上k8s裡吧</p>
+<h1 id="建立ECR的image"><a href="#建立ECR的image" class="headerlink" title="建立ECR的image"></a>建立ECR的image</h1><ol>
+<li>用之前gcp的簡單範例，建立image</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">vi Dockerfile</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">6.9</span>.<span class="number">2</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> server.js .</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> node server.js</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t 185271018684.dkr.ecr.us-east-2.amazonaws.com/hello-node:v1 .</span><br><span class="line"></span><br><span class="line">$ aws ecr create-repository --repository-name hello-node</span><br><span class="line"><span class="comment">#輸出</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;repository&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;repositoryArn&quot;</span>: <span class="string">&quot;arn:aws:ecr:us-east-2:185271018684:repository/hello-node&quot;</span>,</span><br><span class="line">        <span class="string">&quot;registryId&quot;</span>: <span class="string">&quot;185271018684&quot;</span>,</span><br><span class="line">        <span class="string">&quot;repositoryName&quot;</span>: <span class="string">&quot;hello-node&quot;</span>,</span><br><span class="line">        <span class="string">&quot;repositoryUri&quot;</span>: <span class="string">&quot;185271018684.dkr.ecr.us-east-2.amazonaws.com/hello-node&quot;</span>,</span><br><span class="line">        <span class="string">&quot;createdAt&quot;</span>: <span class="string">&quot;2022-05-23T13:50:04+08:00&quot;</span>,</span><br><span class="line">        <span class="string">&quot;imageTagMutability&quot;</span>: <span class="string">&quot;MUTABLE&quot;</span>,</span><br><span class="line">        <span class="string">&quot;imageScanningConfiguration&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;scanOnPush&quot;</span>: <span class="literal">false</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;encryptionConfiguration&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;encryptionType&quot;</span>: <span class="string">&quot;AES256&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ol start="3">
+<li>擷取上方的 repositoryUri 值，並建立tag。</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker tag hello-node:v1 185271018684.dkr.ecr.us-east-2.amazonaws.com/hello-node:v1</span><br></pre></td></tr></table></figure>
+<br>
+
+<ol start="4">
+<li><p>執行 aws ecr get-login-password 命令，如此us-west-2 區域的範例中所示</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 185271018684.dkr.ecr.us-west-2.amazonaws.com/hello-node:v1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>push</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker push 185271018684.dkr.ecr.us-east-2.amazonaws.com/hello-node:v1</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<p>你可以到ECR畫面中確認，應該已經出現hello-node:v1，把URI位置複製下來吧～</p>
+<img src="/notebook/how-to-install-k8s-on-aws/9.png" class="" title="label">
+
+<blockquote>
+<p>Note: Mac M1下build的image會有問題，請務必使用linux系統編譯</p>
+</blockquote>
+<br>
+
+<p>執行kubectl，讓image進入k8s</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web-deployment</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">hello-node</span></span><br><span class="line">        <span class="attr">image:</span> <span class="number">185271018684.</span><span class="string">dkr.ecr.us-east-2.amazonaws.com/hello-node:v1</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+
+<p>建立k8s deployment<br><br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">kubectl apply -f deployment-hello.yaml</span> </span><br><span class="line"><span class="meta">$ </span><span class="language-bash">kubectl get deployment</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>建立service，AWS會自動給予LB endpoint</p>
+<br>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">kubectl expose deployment web-deployment --<span class="built_in">type</span>=LoadBalancer --name=demo-aws-service --port 8080</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>執行連結 <br></p>
+<img src="/notebook/how-to-install-k8s-on-aws/10.png" class="" title="label">
+
+
+<h1 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/getting-started.html">AWS EKS入門</a></p>
+<br>
+
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/zh_tw/codepipeline/latest/userguide/tutorials-ecs-ecr-codedeploy.html">AWS ECR</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-aws/" data-id="cl8n56o3r000trjtweue459to" data-title="how to install k8s on aws" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-fig-Terminal" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/fig-Terminal/" class="article-date">
+  <time class="dt-published" datetime="2022-05-19T09:20:09.000Z" itemprop="datePublished">2022-05-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/fig/">fig</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/fig-Terminal/">fig Terminal</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="what-is-fig"><a href="#what-is-fig" class="headerlink" title="what is fig"></a>what is fig</h1><p>Fig 讓你在 Terminal 裡輸入 command 時，自動列出相關的參數&#x2F;檔案&#x2F;記錄。<br>有了這個，可以減少很多查 man page 的時間。</p>
+<br>
+
+<img src="/notebook/fig-Terminal/1.gif" class="" title="label">
+
+<h1 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h1><p>mac 安裝起手式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">brew install fig</span></span><br><span class="line">==&gt; Caveats</span><br><span class="line">Please launch the Fig application to finish setup...</span><br><span class="line"></span><br><span class="line">==&gt; Downloading &lt;https://versions.withfig.com/fig%20421.dmg&gt;</span><br><span class="line"><span class="meta">#</span><span class="language-bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">==&gt; Installing Cask fig</span><br><span class="line">==&gt; Moving App &#x27;Fig.app&#x27; to &#x27;/Applications/Fig.app&#x27;</span><br><span class="line">==&gt; Linking Binary &#x27;fig-darwin-universal&#x27; to &#x27;/usr/local/bin/fig&#x27;</span><br><span class="line">🍺  fig was successfully installed!</span><br></pre></td></tr></table></figure>
+<br>
+
+<p>裝完後要運行APP</p>
+<br>
+
+<img src="/notebook/fig-Terminal/1.png" class="" title="label">
+
+<br>
+
+<p>跟你要求權限</p>
+<img src="/notebook/fig-Terminal/2.png" class="" title="label">
+
+<br>
+
+<p>會要求收集一些資訊</p>
+<img src="/notebook/fig-Terminal/3.png" class="" title="label">
+
+<br>
+
+<p>註冊一下～你會收到驗證信</p>
+<img src="/notebook/fig-Terminal/4.png" class="" title="label">
+
+<br>
+
+<p>設定頁面</p>
+<img src="/notebook/fig-Terminal/5.png" class="" title="label">
+
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://fig.io/">fig</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/fig-Terminal/" data-id="cl8n56o2h0006rjtw906b15hi" data-title="fig Terminal" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-install-kubectl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-kubectl/" class="article-date">
+  <time class="dt-published" datetime="2022-05-19T09:00:20.000Z" itemprop="datePublished">2022-05-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/kubectl/">kubectl</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-kubectl/">how to install kubectl</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="what-is-kubectl"><a href="#what-is-kubectl" class="headerlink" title="what is kubectl"></a>what is kubectl</h1><p>命令列工具，適用於使用 Kubernetes 叢集，是針對k8s下指令的工具，client要創建或刪除東西，都是透過該工具下指令。</p>
+<h1 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h1><p>基本上如果你的k8s架設在雲端上，在mac上均需要安裝kubectl，再透過CLI去存取你的k8s集群～</p>
+<ol>
+<li>透過 Homebrew 安裝<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">brew install kubectl</span> </span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<ol start="2">
+<li>確認是否安裝完成<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">kubectl cluster-info</span> </span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+補充： 
+為了讓kubectl能夠發現並訪問Kubernetes集群，你需要一個kubeconfig文件， 
+該文件在創建集群時，會自動產生。 通常，kubectl 的配置文件存放在 
+
+<p><code>~/.kube/config</code> </p>
+<br>
+
+<ol start="3">
+<li>開啟 shell 自動補全功能<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;source &lt;(kubectl completion zsh)&quot;</span> &gt;&gt; ~/.zshrc</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">source</span> ~/.zshrc</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://kubernetes.io/zh/docs/tasks/tools/install-kubectl-macos/#install-with-homebrew-on-macos">install kubectl</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-kubectl/" data-id="cl8n56o490014rjtw5e2w0xz3" data-title="how to install kubectl" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-login-eks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-login-eks/" class="article-date">
+  <time class="dt-published" datetime="2022-05-19T05:31:23.000Z" itemprop="datePublished">2022-05-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/aws/">aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-login-eks/">how to login eks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>這邊記錄一下，假設你已經有AWS的EKS叢集，若你想要在不同的地方進行登入時，所需要進行的步驟：</p>
+<ul>
+<li>確認當前的開發機器上，AWS CLI與eksctl 均已安裝，並且是最新的，而AWS CLI與kubectl的版本有點關係，可以看看這<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/aws/aws-cli/issues/6920">issue</a> ， 主要解法就是更新一下CLI並重新 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverflow.com/questions/72126048/error-exec-plugin-invalid-apiversion-client-authentication-k8s-io-v1alpha1-c">set config</a></li>
+</ul>
+<br>
+
+<ul>
+<li>如果你是叢集的建立者</li>
+</ul>
+<ol>
+<li>若要查看你的 AWS CLI 使用者或角色的組態，請執行以下命令：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">aws sts get-caller-identity</span></span><br><span class="line">&#123;</span><br><span class="line">    &quot;UserId&quot;: &quot;XXXXXXXXXXXXXXXXXXXXX&quot;,</span><br><span class="line">    &quot;Account&quot;: &quot;XXXXXXXXXXXX&quot;,</span><br><span class="line">    &quot;Arn&quot;: &quot;arn:aws:iam::XXXXXXXXXXXX:user/testuser&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<ol start="2">
+<li>確認你的arn相符</li>
+</ol>
+<br>
+
+<ol start="3">
+<li>set你的kubeconfig，注意，需要用正確的IAM身份執行<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">將 eks-cluster-name 取代為你的叢集名稱。將 aws-region 取代為你的 AWS 區域</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">aws eks update-kubeconfig --name eks-cluster-name --region aws-region</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">或者連同ARN一起設定</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">aws eks update-kubeconfig --name eks-cluster-name --region aws-region --role-arn arn:aws:iam::XXXXXXXXXXXX:role/testrole</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<ol start="4">
+<li>確認kubeconfig是否已經更新<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">kubectl config view --minify</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<ol start="5">
+<li>若要確認你的 IAM 使用者或角色是否經驗證<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">kubectl get svc</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<hr>
+<br>
+
+<ul>
+<li>如果你不是叢集建立者</li>
+</ul>
+<ol>
+<li>查看你的角色，取得你的arn<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">aws sts get-caller-identity</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<ol start="2">
+<li><p>交給你的管理員，透過管理員編輯 aws-auth ConfigMap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">kubectl edit configmap aws-auth -n kube-system</span></span><br></pre></td></tr></table></figure>
+<br>
+</li>
+<li><p>管理員將新arn填入，格式如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">將 testuser 取代為你的使用者名稱</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">arn 取代為拿到的arn</span></span><br><span class="line">mapUsers: |</span><br><span class="line">  - userarn: arn:aws:iam::XXXXXXXXXXXX:user/testuser</span><br><span class="line">    username: testuser</span><br><span class="line">    groups:</span><br><span class="line">      - system:masters</span><br><span class="line">      </span><br><span class="line"><span class="meta"># </span><span class="language-bash">將 IAM 角色新增到 mapRoles</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">將 testrole 取代為你的角色</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">arn 取代為拿到的arn</span></span><br><span class="line">mapRoles: |</span><br><span class="line">  - rolearn: arn:aws:iam::XXXXXXXXXXXX:role/testrole</span><br><span class="line">    username: testrole</span><br><span class="line">    groups:</span><br><span class="line">      - system:masters</span><br><span class="line">      </span><br><span class="line"><span class="meta"># </span><span class="language-bash">mapRoles 部分中 username 的值僅接受小寫字元。 映射該 IAM 角色時應該略去路徑，因為 rolearn 不支援路徑。</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">system:masters 群組允許進階使用者存取對任何資源執行任何動作。</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<p>打完收工～應該就可以登入了～</p>
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://aws.amazon.com/tw/premiumsupport/knowledge-center/eks-api-server-unauthorized-error/">aws login</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-login-eks/" data-id="cl8n56o4b0016rjtw3nlq0lte" data-title="how to login eks" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-install-eksctl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-eksctl/" class="article-date">
+  <time class="dt-published" datetime="2022-05-19T04:37:40.000Z" itemprop="datePublished">2022-05-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/aws/">aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-eksctl/">how to install eksctl</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="what-is-eksctl"><a href="#what-is-eksctl" class="headerlink" title="what is eksctl"></a>what is eksctl</h1><p>命令列工具，適用於使用 EKS 叢集，可自動執行許多個別任務。</p>
+<h1 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h1><p>還沒安裝 Homebrew的，請先安裝</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)</span>&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>安裝 Weaveworks Homebrew tap。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">brew tap weaveworks/tap</span></span><br></pre></td></tr></table></figure>
+<br>
+
+<p>安裝或升級eksctl</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">未安裝</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">brew install weaveworks/tap/eksctl</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">已安裝</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">brew upgrade eksctl &amp;&amp; brew <span class="built_in">link</span> --overwrite eksctl</span></span><br></pre></td></tr></table></figure>
+
+<p>確認是否安裝成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">eksctl version</span></span><br><span class="line">0.97.0</span><br></pre></td></tr></table></figure>
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/eksctl.html">install eksctl</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-eksctl/" data-id="cl8n56o3v000vrjtwgeek6rnj" data-title="how to install eksctl" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-install-aws-cli" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-aws-cli/" class="article-date">
+  <time class="dt-published" datetime="2022-05-19T03:57:24.000Z" itemprop="datePublished">2022-05-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/aws/">aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-aws-cli/">how to install aws cli</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>要使用aws公有雲，aws cli是一個很方便的工句，跟之前有介紹gcp的cli一樣，可以幫助你自動化很多的建置，今天以mac為例子，教大家如何安裝aws-cli，之後再透過aws-cli建立k8s集群。</p>
+<h1 id="what-is-AWS-CLI"><a href="#what-is-AWS-CLI" class="headerlink" title="what is AWS CLI"></a>what is AWS CLI</h1><p>AWS Command Line Interface (AWS CLI) 是開放原始碼工具，可讓你在命令列 Shell 中使用命令來與 AWS 服務互動。<br>只需最少的組態，AWS CLI 就可以讓你在終端程式中，從命令提示字元開始執行可實作相當於瀏覽器型 AWS Management Console 所提供功能的命令。</p>
+<h1 id="why-is-AWS-CLI"><a href="#why-is-AWS-CLI" class="headerlink" title="why is AWS CLI"></a>why is AWS CLI</h1><p>AWS CLI 能夠直接存取 AWS 服務的公有 API。 你可以利用 AWS CLI 探索服務的功能，並開發 Shell 指令碼來管理資源。<br>除了低階的 API 同等命令，有幾個 AWS 服務還提供 AWS CLI 自訂功能。自訂功能可能包括較高階的命令，可簡化具有複雜 API 的服務使用。<br>所以使用起來會更方便建立自動化流程。</p>
+<h1 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h1><p>先下載 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://awscli.amazonaws.com/AWSCLIV2.pkg">aws-cli</a> ，直接點選開啟安裝。</p>
+<p>接著就不管3721，就直接選取預設選項</p>
+<img src="/notebook/how-to-install-aws-cli/1.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-aws-cli/2.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-aws-cli/3.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-aws-cli/4.png" class="" title="label">
+
+<p>確認一下安裝位置與是否安裝成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">which</span> aws</span></span><br><span class="line">/usr/local/bin/aws</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">aws --version</span></span><br><span class="line">aws-cli/2.2.44 Python/3.8.8 Darwin/20.5.0 exe/x86_64 prompt/off</span><br></pre></td></tr></table></figure>
+<br>
+
+<p>成功拉～<br>接下來如果要建立k8s集群，還需要kubectl和eksctl，下一篇繼續。<br>記得配一下config~</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ aws configure</span><br><span class="line">AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE</span><br><span class="line">AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</span><br><span class="line">Default region name [None]: us-west-2</span><br><span class="line">Default output format [None]: json</span><br></pre></td></tr></table></figure>
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">aws cli doc</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-aws-cli/" data-id="cl8n56o38000lrjtw84ovbrs3" data-title="how to install aws cli" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-install-gcloud" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-gcloud/" class="article-date">
+  <time class="dt-published" datetime="2022-05-17T07:17:05.000Z" itemprop="datePublished">2022-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-gcloud/">how to install gcloud</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="what-is-gcloud"><a href="#what-is-gcloud" class="headerlink" title="what is gcloud"></a>what is gcloud</h1><p>Google 提供一個很好用的 CLI 介面工具，讓我們可以用指令的方式控制 GCP 的資源。</p>
+<h1 id="why-is-gcloud"><a href="#why-is-gcloud" class="headerlink" title="why is gcloud"></a>why is gcloud</h1><p>雖然Google有提供好用的介面，但有時候可能會需要一些自動化，因此，透過gcloud cli，能夠完成更困難的自動化建置，例如自動建立GKE或GCE等等。</p>
+<h1 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h1><p>請到google下載頁面(參考最下方的參考連結)，記得選擇你要的OS，這邊以M1為例子，並進行解壓縮，你會得到google-cloud-sdk的資料夾</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd google-cloud-sdk &amp;&amp; sh ./install.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ./bin/gcloud init</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>一開始會要求你進行認證，請選擇你的google帳號，就會開始進行配置了。看你是要新建專案還是用現有專案來使用。</p>
+<img src="/notebook/how-to-install-gcloud/1.png" class="" title="label">
+
+
+<br>
+
+<p>安裝完畢後可以確認一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud version</span><br></pre></td></tr></table></figure>
+<br>
+
+<img src="/notebook/how-to-install-gcloud/2.png" class="" title="label">
+
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://cloud.google.com/sdk/docs/install">gcloud download</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-gcloud/" data-id="cl8n56o440010rjtw48ez9t1x" data-title="how to install gcloud" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-install-k8s-on-gcp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/install-k8s-on-gcp/" class="article-date">
+  <time class="dt-published" datetime="2022-05-17T06:59:00.000Z" itemprop="datePublished">2022-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/install-k8s-on-gcp/">install k8s cluster on gcp</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>這邊介紹如何在GCP上安裝k8s cluster，整體而言，會參考之前GCP架構。<br><br></p>
+<img src="/notebook/install-k8s-on-gcp/1.png" class="" title="label">
+
+
+<h1 id="整體步驟"><a href="#整體步驟" class="headerlink" title="整體步驟"></a>整體步驟</h1><p>1.準備一支Node.js應用程式 </p>
+<p>2.建立 Docker container image </p>
+<p>3.把image推送並儲存在Container Registry </p>
+<p>4.建立GKE Cluster，部署Hello Node</p>
+<p>5.讓應用程式上線expose</p>
+<h1 id="開始前準備好GCP帳號與gcloud的client安裝"><a href="#開始前準備好GCP帳號與gcloud的client安裝" class="headerlink" title="開始前準備好GCP帳號與gcloud的client安裝"></a>開始前準備好GCP帳號與gcloud的client安裝</h1><p>可以參考之前寫的內容</p>
+<p>#開啟 cloud shell</p>
+<img src="/notebook/install-k8s-on-gcp/2.png" class="" title="label">
+
+<p>用vi指令建一個Node.js檔案</p>
+<p><code>vi server.js</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var http = require(&#x27;http&#x27;);</span><br><span class="line">  var handleRequest = function(request, response) &#123;</span><br><span class="line">  response.writeHead(200);</span><br><span class="line">  response.end(&quot;Hello World!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">var www = http.createServer(handleRequest);</span><br><span class="line">www.listen(8080);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>接著執行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>並在右上角的網頁預覽，可以進行預覽</p>
+<img src="/notebook/install-k8s-on-gcp/3.png" class="" title="label">
+<img src="/notebook/install-k8s-on-gcp/4.png" class="" title="label">
+
+<br>
+
+<h1 id="開始建立image"><a href="#開始建立image" class="headerlink" title="開始建立image"></a>開始建立image</h1><p><code>vi Dockerfile</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM node:6.9.2</span><br><span class="line">EXPOSE 8080</span><br><span class="line">COPY server.js .</span><br><span class="line">CMD node server.js</span><br></pre></td></tr></table></figure>
+<br>
+用以下指令建立image，andylab-343008是你的projectID
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t gcr.io/andylab-343008/hello-node:v1 .   </span><br></pre></td></tr></table></figure>
+<br>
+
+<p>過程中會要求授權</p>
+<img src="/notebook/install-k8s-on-gcp/5.png" class="" title="label">
+
+<br>
+等待並且看到成功建立image
+
+<img src="/notebook/install-k8s-on-gcp/6.png" class="" title="label">
+<img src="/notebook/install-k8s-on-gcp/7.png" class="" title="label">
+
+<p>你可以執行一下docker指令，確認是否正常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:8080 gcr.io/andylab-343008/hello-node:v1</span><br></pre></td></tr></table></figure>
+<img src="/notebook/install-k8s-on-gcp/8.png" class="" title="label">
+
+<p>一樣透過網頁預覽，可以開啟網頁，同樣是看到Hello，World!就是成功了，就可以先暫時停止～</p>
+<p><code>docker stop &lt;CONTAINER ID&gt;</code></p>
+<br>
+
+<h1 id="把建立的image上傳到GCR"><a href="#把建立的image上傳到GCR" class="headerlink" title="把建立的image上傳到GCR"></a>把建立的image上傳到GCR</h1><p>GCR (Google Container Registry)，它是一個專門放image的地方。<br>這時候要用我們上面提到的gcloud來進行了～</p>
+<p>先啟用GCR API服務</p>
+<img src="/notebook/install-k8s-on-gcp/9.png" class="" title="label">
+<br>
+如果沒有啟用會收到錯誤訊息
+<img src="/notebook/install-k8s-on-gcp/10.png" class="" title="label">
+
+<p><code>gcloud docker -- push gcr.io/andylab-343008/hello-node:v1</code></p>
+<p>等待</p>
+<img src="/notebook/install-k8s-on-gcp/12.png" class="" title="label">
+
+<br>
+
+<p>結束後至GCR的GUI介面查看，會發現多了一個image</p>
+<img src="/notebook/install-k8s-on-gcp/11.png" class="" title="label">
+
+<br>
+
+<h1 id="建立K8s-Cluster"><a href="#建立K8s-Cluster" class="headerlink" title="建立K8s Cluster"></a>建立K8s Cluster</h1><p>一樣要使用厲害的gcloud來建置， 首先先確保你的gcloud 所在的project是你想要的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud config set project YOUR_PROJECT_ID </span><br></pre></td></tr></table></figure>
+<br>
+先開啟 API service - container.googleapis.com
+不然會無法建立cluster唷～
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud services enable container.googleapis.com</span><br></pre></td></tr></table></figure>
+<img src="/notebook/install-k8s-on-gcp/13.png" class="" title="label">
+
+<br>
+
+<p>開始建立cluster，等待～</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud container clusters create hello-world --num-nodes 2 --zone asia-east1-a --machine-type n1-standard-1</span><br></pre></td></tr></table></figure>
+
+<img src="/notebook/install-k8s-on-gcp/14.png" class="" title="label">
+
+<br>
+成功拉～
+
+<img src="/notebook/install-k8s-on-gcp/15.png" class="" title="label">
+
+<p>前往GKE確認一下</p>
+<img src="/notebook/install-k8s-on-gcp/16.png" class="" title="label">
+
+<h1 id="將image-部署至-GKE上"><a href="#將image-部署至-GKE上" class="headerlink" title="將image 部署至 GKE上"></a>將image 部署至 GKE上</h1><p>先建立簡單的yaml試驗，之後再針對k8s講解～</p>
+<p><code>vi deployment-hello.yaml</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: web-deployment</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: web</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: web</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: hello-node</span><br><span class="line">        image: gcr.io/andylab-343008/hello-node:v1</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f deployment-hello.yaml </span><br><span class="line">kubectl get deployment</span><br></pre></td></tr></table></figure>
+<br>
+
+<p>確認有建立了deployment</p>
+<img src="/notebook/install-k8s-on-gcp/17.png" class="" title="label">
+
+
+<p>為了讓你的image對外露出，建立service</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment web-deployment --type LoadBalancer --port 8080 </span><br></pre></td></tr></table></figure>
+<br>
+需等待一下，你會先看到Pending，這是很正常的～
+
+<img src="/notebook/install-k8s-on-gcp/18.png" class="" title="label">
+
+<p>過幾分鐘後，會發現Pending變成IP了～</p>
+<img src="/notebook/install-k8s-on-gcp/19.png" class="" title="label">
+
+<p>去GCP的網路服務-負載平衡確認，跑出一個LB拉～</p>
+<img src="/notebook/install-k8s-on-gcp/21.png" class="" title="label">
+
+<p>於瀏覽器執行IP~</p>
+<img src="/notebook/install-k8s-on-gcp/20.png" class="" title="label">
+
+
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>於公有雲上建立K8S相對容易許多，<br>這邊大家僅需要學習如何於GCP上建立K8S既可，<br>對於不熟悉K8S的人，可以先照著做～<br>後續在詳細的介紹docker與K8S。</p>
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://google.qwiklabs.com/focuses/564?parent=catalog">gcp lab</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/" data-id="cl8n56o4h001grjtw3s4tgmy4" data-title="install k8s cluster on gcp" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-install-k8s-on-Ubuntu" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/install-k8s-on-Ubuntu/" class="article-date">
+  <time class="dt-published" datetime="2022-05-16T07:21:08.000Z" itemprop="datePublished">2022-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/install-k8s-on-Ubuntu/">install k8s cluster on Ubuntu</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文將介紹如何安裝k8s到Ubuntu，在安裝前請先準備三個虛擬機，你可以透過virtualbox進行安裝，以下規格可以參考：</p>
+<table>
+<thead>
+<tr>
+<th>Server Type</th>
+<th>Hostname</th>
+<th>Specs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Master</td>
+<td>k8s-master01</td>
+<td>4GB Ram, 2vcpus</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>k8s-worker01</td>
+<td>4GB Ram, 2vcpus</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>k8s-worker02</td>
+<td>4GB Ram, 2vcpus</td>
+</tr>
+</tbody></table>
+<h1 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h1><ul>
+<li>針對Ubuntu進行配置</li>
+<li>安裝docker</li>
+<li>安裝kubeadm、kubectl以及kubelet</li>
+<li>建立並初始化 master 節點</li>
+<li>建立並將 worker 節點加入</li>
+</ul>
+<br>
+
+<h4 id="針對Ubuntu進行配置"><a href="#針對Ubuntu進行配置" class="headerlink" title="針對Ubuntu進行配置"></a>針對Ubuntu進行配置</h4><ul>
+<li><p>先關掉 swap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i &#x27;/ swap / s/^\(.*\)$/#\1/g&#x27; /etc/fstab</span><br><span class="line">sudo swapoff -a</span><br></pre></td></tr></table></figure>
+
+<br>
+</li>
+<li><p>接著啟用內核模組與配置sysctl</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Enable kernel modules</span></span><br><span class="line">sudo modprobe overlay</span><br><span class="line">sudo modprobe br_netfilter</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">Add some settings to sysctl</span></span><br><span class="line">sudo tee /etc/sysctl.d/kubernetes.conf&lt;&lt;EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">EOF</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">Reload sysctl</span></span><br><span class="line">sudo sysctl --system</span><br></pre></td></tr></table></figure>
+
+<br>
+</li>
+<li><p>更新一下，並重新開機</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt -y full-upgrade</span><br><span class="line">[ -f /var/run/reboot-required ] &amp;&amp; sudo reboot -f</span><br></pre></td></tr></table></figure>
+
+<br></li>
+</ul>
+<h4 id="install-docker-並且修改一下cgroups"><a href="#install-docker-並且修改一下cgroups" class="headerlink" title="install docker 並且修改一下cgroups"></a>install docker 並且修改一下cgroups</h4>  <br>
+
+<p>  cgroups是啥呢，你可以把它理解成一個進程處理隔離工具，docker就是用它来實現容器的隔離的。docker 默認使用的是cgroupfs，<br>  而 k8s 也用到了一个進程隔離工具systemd，如果使用兩個隔離工具的話可能會引起異常，所以必須要把 docker 的也改成systemd。</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">更新並安裝相關所需套件</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">增加repo</span></span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">更新並安裝docker</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y containerd.io docker-ce docker-ce-cli</span><br><span class="line"><span class="meta">  </span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">建立資料夾</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">建立 daemon json config 文件，並填入內容</span></span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span><br><span class="line">  &quot;log-driver&quot;: &quot;json-file&quot;,</span><br><span class="line">  &quot;log-opts&quot;: &#123;</span><br><span class="line">    &quot;max-size&quot;: &quot;100m&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;storage-driver&quot;: &quot;overlay2&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">重啟docker</span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br><span class="line">sudo systemctl enable docker</span><br><span class="line"><span class="meta">  </span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">檢查是否安裝與修改成功</span></span><br><span class="line">docker info | grep Cgroup</span><br></pre></td></tr></table></figure>
+
+  <br>
+
+<h4 id="install-kubelet-kubeadm-and-kubectl"><a href="#install-kubelet-kubeadm-and-kubectl" class="headerlink" title="install kubelet, kubeadm and kubectl"></a>install kubelet, kubeadm and kubectl</h4><p>  為每一個節點都安裝 kubelet, kubeadm and kubectl</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -y install curl apt-transport-https</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">增加repo</span></span><br><span class="line">curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -</span><br><span class="line">echo &quot;deb https://apt.kubernetes.io/ kubernetes-xenial main&quot; | sudo tee /etc/apt/sources.list.d/kubernetes.list</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">更新並且安裝相關所需套件</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt -y install vim git curl wget kubelet kubeadm kubectl</span><br><span class="line">sudo apt-mark hold kubelet kubeadm kubectl</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">確認是否安裝成功</span></span><br><span class="line">kubectl version --client &amp;&amp; kubeadm version</span><br></pre></td></tr></table></figure>
+
+  <br>
+
+<h4 id="建立並初始化master節點"><a href="#建立並初始化master節點" class="headerlink" title="建立並初始化master節點"></a>建立並初始化master節點</h4>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">初始化</span></span><br><span class="line">kubeadm init \</span><br><span class="line">--apiserver-advertise-address=192.168.0.1 \</span><br><span class="line">--pod-network-cidr=192.168.0.0/16</span><br></pre></td></tr></table></figure>
+<br>
+--apiserver-advertise-address: k8s 中的主要節點的apiserver的位置，填自己的節點 ip
+<br>
+--pod-network-cidr: k8s內部的網路
+<br>
+
+<p>這時候你會看到類似以下圖片的結果，記得把最後一句join記下來</p>
+<img src="/notebook/install-k8s-on-Ubuntu/kube-init.png" class="" title="label">
+
+<br>
+
+<h4 id="建立並將-worker-節點加入"><a href="#建立並將-worker-節點加入" class="headerlink" title="建立並將 worker 節點加入"></a>建立並將 worker 節點加入</h4><p>ssh 進入worker，並執行剛剛的join語法。 <br></p>
+<img src="/notebook/install-k8s-on-Ubuntu/kube-init-2.png" class="" title="label">
+
+<h4 id="確認"><a href="#確認" class="headerlink" title="確認"></a>確認</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes </span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/install-k8s-on-Ubuntu/kube-init-3.png" class="" title="label">
+
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://medium.com/starbugs/%E7%AC%AC%E4%B8%80%E5%8D%83%E9%9B%B6%E4%B8%80%E7%AF%87%E7%9A%84-cgroups-%E4%BB%8B%E7%B4%B9-a1c5005be88c">第一千零一篇的 cgroups 介紹</a><br><br><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://computingforgeeks.com/deploy-kubernetes-cluster-on-ubuntu-with-kubeadm/">Install Kubernetes Cluster on Ubuntu 20.04 with kubeadm</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/install-k8s-on-Ubuntu/" data-id="cl8n56o4d001crjtw2zf4ch7v" data-title="install k8s cluster on Ubuntu" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-understanding-k8s-component" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/understanding-k8s-component/" class="article-date">
+  <time class="dt-published" datetime="2022-05-10T12:59:36.000Z" itemprop="datePublished">2022-05-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/understanding-k8s-component/">understanding-k8s-component</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>要建立k8s集群前，讓我們先來了解一些組建，還記得這張圖嗎？</p>
+<img src="/notebook/understanding-k8s-component/k8s.jpeg" class="" title="label">
+<p>透過這張圖，可以發現，要建立k8s集群，必須要有機器群，而機器群的每一台機器都稱之為節點(Node)，<br>此外，集群中一定會有一個發號司令的節點，該節點稱之為Master，而其他節點稱為Worker。<br>發號司令的Master是由api-Server、Scheduler、Controller-Manager、<br>kubectl四個組件組成。讓我們繼續往下更深入的看一下各組件的作用吧。<br><br><br><br></p>
+<p>下面的組件都是在Master上運行，而且也只會在Master上運行。</p>
+<table>
+<thead>
+<tr>
+<th>組件名稱</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>kubectl</td>
+<td>是針對k8s下指令的工具，client要創建或刪除東西，都是透過該工具下指令</td>
+</tr>
+<tr>
+<td>api-server</td>
+<td>當kubectl下達指令，會由api-server接收所發送過來的請求，進行指揮協調工作</td>
+</tr>
+<tr>
+<td>scheduler</td>
+<td>調度Pod的元件，當用戶創建Pod時，按照一定的排程演算法，判定Pod需落在哪個Worker上</td>
+</tr>
+<tr>
+<td>controller-manager</td>
+<td>k8s大管家，負責控制控制管理對應的資源，如Pod數量、副本（replication）、工作節點的監控（Worker）等</td>
+</tr>
+</tbody></table>
+<br>
+<br>
+
+<p>下面的組件則是在其他Node上運行，也就是Worker上運行，包含Master在內。</p>
+<table>
+<thead>
+<tr>
+<th>組件名稱</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>kubelet</td>
+<td>是一個代理，接受Master分配過來的任務，並把節點的訊息反饋給Master的api-server</td>
+</tr>
+<tr>
+<td>kube-proxy</td>
+<td>用於把發送給Service的請求轉發給後端的Pod，模式有iptables與ipvs，這在講Service的時候在作解釋。</td>
+</tr>
+<tr>
+<td>calico</td>
+<td>用於各節點的Pod能夠互相通信</td>
+</tr>
+</tbody></table>
+<br>
+<br>
+
+<p>其他</p>
+<table>
+<thead>
+<tr>
+<th>組件名稱</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>etcd</td>
+<td>etcd 負責儲存 k8s Cluster 的配置資訊和各種資源的狀態資訊。當資料發生變化時，etcd 會快速地通知 k8s 相關組件。</td>
+</tr>
+<tr>
+<td>flannel</td>
+<td>維持各個節點上pod之間的通訊。</td>
+</tr>
+</tbody></table>
+<br>
+<br>
+好拉～了解了這些，我們可能還需要再了解一下分布式架構，之後好配置每個節點。可以參考下面的圖片。
+分布式架構，在很多地方均有使用，例如Redis、RabbitMQ、Web應用等等。
+
+<img src="/notebook/understanding-k8s-component/cluster.png" class="" title="label">
+
+<p>接下來的單元，會教你如何在Ubuntu系統上，建立k8s集群。學會建立k8s集群後，相對學習公有雲上的k8s就會容易許多，<br>因為公有雲上的k8s，幾乎都已經可以透過一行指令進行配置了。之後也會介紹如何在公有雲建制k8s集群。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/understanding-k8s-component/" data-id="cl8n56o4p001krjtwbh1g6oli" data-title="understanding-k8s-component" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/notebook/">&laquo; 上一頁</a><a class="page-number" href="/notebook/">1</a><span class="page-number current">2</span><a class="page-number" href="/notebook/page/3/">3</a><a class="extend next" rel="next" href="/notebook/page/3/">下一頁 &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>install k8s cluster on gcp | Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="這邊介紹如何在GCP上安裝k8s cluster，整體而言，會參考之前GCP架構。    整體步驟1.準備一支Node.js應用程式  2.建立 Docker container image  3.把image推送並儲存在Container Registry  4.建立GKE Cluster，部署Hello Node 5.讓應用程式上線expose 開始前準備好GCP帳號與gcloud的clien">
+<meta property="og:type" content="article">
+<meta property="og:title" content="install k8s cluster on gcp">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="這邊介紹如何在GCP上安裝k8s cluster，整體而言，會參考之前GCP架構。    整體步驟1.準備一支Node.js應用程式  2.建立 Docker container image  3.把image推送並儲存在Container Registry  4.建立GKE Cluster，部署Hello Node 5.讓應用程式上線expose 開始前準備好GCP帳號與gcloud的clien">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/1.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/2.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/3.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/4.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/5.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/6.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/7.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/8.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/9.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/10.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/12.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/11.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/13.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/14.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/15.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/16.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/17.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/18.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/19.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/21.png">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/20.png">
+<meta property="article:published_time" content="2022-05-17T06:59:00.000Z">
+<meta property="article:modified_time" content="2022-09-29T04:08:18.525Z">
+<meta property="article:author" content="Andy">
+<meta property="article:tag" content="k8s kubernetes cluster">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/1.png">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-install-k8s-on-gcp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/install-k8s-on-gcp/" class="article-date">
+  <time class="dt-published" datetime="2022-05-17T06:59:00.000Z" itemprop="datePublished">2022-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      install k8s cluster on gcp
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>這邊介紹如何在GCP上安裝k8s cluster，整體而言，會參考之前GCP架構。<br><br></p>
+<img src="/notebook/install-k8s-on-gcp/1.png" class="" title="label">
+
+
+<h1 id="整體步驟"><a href="#整體步驟" class="headerlink" title="整體步驟"></a>整體步驟</h1><p>1.準備一支Node.js應用程式 </p>
+<p>2.建立 Docker container image </p>
+<p>3.把image推送並儲存在Container Registry </p>
+<p>4.建立GKE Cluster，部署Hello Node</p>
+<p>5.讓應用程式上線expose</p>
+<h1 id="開始前準備好GCP帳號與gcloud的client安裝"><a href="#開始前準備好GCP帳號與gcloud的client安裝" class="headerlink" title="開始前準備好GCP帳號與gcloud的client安裝"></a>開始前準備好GCP帳號與gcloud的client安裝</h1><p>可以參考之前寫的內容</p>
+<p>#開啟 cloud shell</p>
+<img src="/notebook/install-k8s-on-gcp/2.png" class="" title="label">
+
+<p>用vi指令建一個Node.js檔案</p>
+<p><code>vi server.js</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var http = require(&#x27;http&#x27;);</span><br><span class="line">  var handleRequest = function(request, response) &#123;</span><br><span class="line">  response.writeHead(200);</span><br><span class="line">  response.end(&quot;Hello World!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">var www = http.createServer(handleRequest);</span><br><span class="line">www.listen(8080);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>接著執行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>並在右上角的網頁預覽，可以進行預覽</p>
+<img src="/notebook/install-k8s-on-gcp/3.png" class="" title="label">
+<img src="/notebook/install-k8s-on-gcp/4.png" class="" title="label">
+
+<br>
+
+<h1 id="開始建立image"><a href="#開始建立image" class="headerlink" title="開始建立image"></a>開始建立image</h1><p><code>vi Dockerfile</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM node:6.9.2</span><br><span class="line">EXPOSE 8080</span><br><span class="line">COPY server.js .</span><br><span class="line">CMD node server.js</span><br></pre></td></tr></table></figure>
+<br>
+用以下指令建立image，andylab-343008是你的projectID
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t gcr.io/andylab-343008/hello-node:v1 .   </span><br></pre></td></tr></table></figure>
+<br>
+
+<p>過程中會要求授權</p>
+<img src="/notebook/install-k8s-on-gcp/5.png" class="" title="label">
+
+<br>
+等待並且看到成功建立image
+
+<img src="/notebook/install-k8s-on-gcp/6.png" class="" title="label">
+<img src="/notebook/install-k8s-on-gcp/7.png" class="" title="label">
+
+<p>你可以執行一下docker指令，確認是否正常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:8080 gcr.io/andylab-343008/hello-node:v1</span><br></pre></td></tr></table></figure>
+<img src="/notebook/install-k8s-on-gcp/8.png" class="" title="label">
+
+<p>一樣透過網頁預覽，可以開啟網頁，同樣是看到Hello，World!就是成功了，就可以先暫時停止～</p>
+<p><code>docker stop &lt;CONTAINER ID&gt;</code></p>
+<br>
+
+<h1 id="把建立的image上傳到GCR"><a href="#把建立的image上傳到GCR" class="headerlink" title="把建立的image上傳到GCR"></a>把建立的image上傳到GCR</h1><p>GCR (Google Container Registry)，它是一個專門放image的地方。<br>這時候要用我們上面提到的gcloud來進行了～</p>
+<p>先啟用GCR API服務</p>
+<img src="/notebook/install-k8s-on-gcp/9.png" class="" title="label">
+<br>
+如果沒有啟用會收到錯誤訊息
+<img src="/notebook/install-k8s-on-gcp/10.png" class="" title="label">
+
+<p><code>gcloud docker -- push gcr.io/andylab-343008/hello-node:v1</code></p>
+<p>等待</p>
+<img src="/notebook/install-k8s-on-gcp/12.png" class="" title="label">
+
+<br>
+
+<p>結束後至GCR的GUI介面查看，會發現多了一個image</p>
+<img src="/notebook/install-k8s-on-gcp/11.png" class="" title="label">
+
+<br>
+
+<h1 id="建立K8s-Cluster"><a href="#建立K8s-Cluster" class="headerlink" title="建立K8s Cluster"></a>建立K8s Cluster</h1><p>一樣要使用厲害的gcloud來建置， 首先先確保你的gcloud 所在的project是你想要的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud config set project YOUR_PROJECT_ID </span><br></pre></td></tr></table></figure>
+<br>
+先開啟 API service - container.googleapis.com
+不然會無法建立cluster唷～
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud services enable container.googleapis.com</span><br></pre></td></tr></table></figure>
+<img src="/notebook/install-k8s-on-gcp/13.png" class="" title="label">
+
+<br>
+
+<p>開始建立cluster，等待～</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud container clusters create hello-world --num-nodes 2 --zone asia-east1-a --machine-type n1-standard-1</span><br></pre></td></tr></table></figure>
+
+<img src="/notebook/install-k8s-on-gcp/14.png" class="" title="label">
+
+<br>
+成功拉～
+
+<img src="/notebook/install-k8s-on-gcp/15.png" class="" title="label">
+
+<p>前往GKE確認一下</p>
+<img src="/notebook/install-k8s-on-gcp/16.png" class="" title="label">
+
+<h1 id="將image-部署至-GKE上"><a href="#將image-部署至-GKE上" class="headerlink" title="將image 部署至 GKE上"></a>將image 部署至 GKE上</h1><p>先建立簡單的yaml試驗，之後再針對k8s講解～</p>
+<p><code>vi deployment-hello.yaml</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: web-deployment</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: web</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: web</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: hello-node</span><br><span class="line">        image: gcr.io/andylab-343008/hello-node:v1</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f deployment-hello.yaml </span><br><span class="line">kubectl get deployment</span><br></pre></td></tr></table></figure>
+<br>
+
+<p>確認有建立了deployment</p>
+<img src="/notebook/install-k8s-on-gcp/17.png" class="" title="label">
+
+
+<p>為了讓你的image對外露出，建立service</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment web-deployment --type LoadBalancer --port 8080 </span><br></pre></td></tr></table></figure>
+<br>
+需等待一下，你會先看到Pending，這是很正常的～
+
+<img src="/notebook/install-k8s-on-gcp/18.png" class="" title="label">
+
+<p>過幾分鐘後，會發現Pending變成IP了～</p>
+<img src="/notebook/install-k8s-on-gcp/19.png" class="" title="label">
+
+<p>去GCP的網路服務-負載平衡確認，跑出一個LB拉～</p>
+<img src="/notebook/install-k8s-on-gcp/21.png" class="" title="label">
+
+<p>於瀏覽器執行IP~</p>
+<img src="/notebook/install-k8s-on-gcp/20.png" class="" title="label">
+
+
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>於公有雲上建立K8S相對容易許多，<br>這邊大家僅需要學習如何於GCP上建立K8S既可，<br>對於不熟悉K8S的人，可以先照著做～<br>後續在詳細的介紹docker與K8S。</p>
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://google.qwiklabs.com/focuses/564?parent=catalog">gcp lab</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/install-k8s-on-gcp/" data-id="cl8n56o4h001grjtw3s4tgmy4" data-title="install k8s cluster on gcp" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/notebook/how-to-install-gcloud/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          how to install gcloud
+        
+      </div>
+    </a>
+  
+  
+    <a href="/notebook/install-k8s-on-Ubuntu/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">install k8s cluster on Ubuntu</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

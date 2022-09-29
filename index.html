@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Andy&#39;s NoteBook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Hello Word~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andy&#39;s NoteBook">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/index.html">
+<meta property="og:site_name" content="Andy&#39;s NoteBook">
+<meta property="og:description" content="Hello Word~">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:author" content="Andy">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/notebook/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/notebook/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/notebook/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/notebook/" id="logo">Andy&#39;s NoteBook</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/notebook/" id="subtitle">i dont know how to coding</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/notebook/">Home</a>
+        
+          <a class="main-nav-link" href="/notebook/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/notebook/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://babyandy0111.github.io/notebook"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-gitlab-CICD-introduce" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/gitlab-CICD-introduce/" class="article-date">
+  <time class="dt-published" datetime="2022-09-29T04:13:18.000Z" itemprop="datePublished">2022-09-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Gitlab-CI-x2F-CD"><a href="#Gitlab-CI-x2F-CD" class="headerlink" title="Gitlab CI&#x2F;CD"></a>Gitlab CI&#x2F;CD</h1><p>軟件開發的持續方法基於自動執行腳本，以最大程度地減少在開發應用程序時引入錯誤的機會。從開發新代碼到部署新代碼，他們幾乎不需要人工干預，甚至根本不需要干預。<br>它涉及到在每次小的迭代中就不斷地構建、測試和部署代碼更改，從而減少了基於已經存在 bug 或失敗的先前版本開發新代碼的機會。</p>
+<ul>
+<li><p>Continuous Integration（持續集成），假設一個應用程序，其代碼存儲在 GitLab 的 Git 倉庫中。開發人員每天都要多次推送代碼更改。對於每次向倉庫的推送，你都可以創建一組腳本來自動構建和測試你的應用程序，從而減少了嚮應用程序引入錯誤的機會。這種做法稱爲持續集成，對於提交給應用程序（甚至是開發分支）的每項更改，它都會自動連續進行構建和測試，以確保所引入的更改通過你爲應用程序建立的所有測試，準則和代碼合規性標準。</p>
+</li>
+<li><p>Continuous Delivery（持續交付），持續交付是超越持續集成的更進一步的操作。應用程序不僅會在推送到代碼庫的每次代碼更改時進行構建和測試，而且，儘管部署是手動觸發的，但作爲一個附加步驟，它也可以連續部署。此方法可確保自動檢查代碼，但需要人工干預才能從策略上手動觸發以必輸此次變更。</p>
+</li>
+<li><p>Continuous Deployment（持續部署），與持續交付類似，但不同之處在於，你無需將其手動部署，而是將其設置爲自動部署。完全不需要人工干預即可部署你的應用程序。</p>
+</li>
+</ul>
+<h1 id="GitLab-CI-x2F-CD-是如何工作的"><a href="#GitLab-CI-x2F-CD-是如何工作的" class="headerlink" title="GitLab CI&#x2F;CD 是如何工作的"></a>GitLab CI&#x2F;CD 是如何工作的</h1><p>爲了使用 GitLab CI&#x2F;CD，你需要一個託管在 GitLab 上的應用程序代碼庫，並且在根目錄中的 .gitlab-ci.yml 文件中指定構建、測試和部署的腳本。</p>
+<p>在這個文件中，你可以定義要運行的腳本，定義包含的依賴項，選擇要按順序運行的命令和要並行運行的命令，定義要在何處部署應用程序，以及指定是否 要自動運行腳本或手動觸發腳本。</p>
+<p>爲了可視化處理過程，假設添加到配置文件中的所有腳本與在計算機的終端上運行的命令相同。</p>
+<p>一旦你已經添加了. gitlab-ci.yml 到倉庫中，GitLab 將檢測到該文件，並使用名爲 GitLab Runner 的工具運行你的腳本。該工具的操作與終端類似。</p>
+<p>這些腳本被分組到 jobs，它們共同組成一個 Pipeline。一個最簡單的 .gitlab-ci.yml 文件可能是這樣的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">before_script:</span>   </span><br><span class="line">  <span class="bullet">-</span> <span class="string">apt-get</span> <span class="string">install</span> <span class="string">zip</span> <span class="string">-y</span>   </span><br><span class="line">  </span><br><span class="line"><span class="attr">run-test:</span>   </span><br><span class="line">  <span class="attr">script:</span>   </span><br><span class="line">    <span class="bullet">-</span> <span class="string">zip</span> <span class="string">--version</span> </span><br></pre></td></tr></table></figure>
+
+
+<h1 id="了解keyword"><a href="#了解keyword" class="headerlink" title="了解keyword"></a>了解keyword</h1><p>因此你要撰寫GitLab前，需要先了解許多keyword，可以到官網中，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.gitlab.com/ee/ci/yaml/index.html">GitLab CI&#x2F;CD Pipeline Configuration Reference</a>，下面就稍微介紹一下一些常用的keyword吧！</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pipeline</td>
+<td>線程，每次執行CICD都是一個線程</td>
+</tr>
+<tr>
+<td>stages</td>
+<td>線程中定義你的步驟，可以多個步驟，他是有順序的</td>
+</tr>
+<tr>
+<td>job</td>
+<td>每個階段也都會有許多job</td>
+</tr>
+<tr>
+<td>variables</td>
+<td>定義你的變數，在你的yaml檔案中，均可以取用這變數值</td>
+</tr>
+<tr>
+<td>image</td>
+<td>你的docker image</td>
+</tr>
+<tr>
+<td>before_script</td>
+<td>跑你的image前所執行的指令</td>
+</tr>
+<tr>
+<td>script</td>
+<td>跑你的image時執行的指令</td>
+</tr>
+<tr>
+<td>after_script</td>
+<td>跑你的image後所執行的指令</td>
+</tr>
+<tr>
+<td>artifacts</td>
+<td>跑完Job成功後附加到作業的文件和目錄列表</td>
+</tr>
+<tr>
+<td>dependencies</td>
+<td>需要先跑完哪個stages，才能被執行</td>
+</tr>
+</tbody></table>
+<h1 id="來個範例吧"><a href="#來個範例吧" class="headerlink" title="來個範例吧"></a>來個範例吧</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 宣告 Pipeline 有哪些 stages，並排定他們的先後順序</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build:golang</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build:aws-cli</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build:node</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 宣告變數</span></span><br><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">AWS_ACCESS_KEY_ID:</span> <span class="string">$AWS_ACCESS_KEY_ID</span></span><br><span class="line">  <span class="attr">AWS_SECRET_ACCESS_KEY:</span> <span class="string">$AWS_SECRET_ACCESS_KEY</span></span><br><span class="line">  <span class="attr">AWS_REGION:</span> <span class="string">$AWS_DEFAULT_REGION</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先宣告 job 的名稱</span></span><br><span class="line"><span class="attr">build:golang:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build:golang</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">golang:1.18.1</span> </span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">apt-get</span> <span class="string">update</span> <span class="string">-q</span> <span class="string">&amp;&amp;</span> <span class="string">apt-get</span> <span class="string">install</span> <span class="string">-y</span> <span class="string">zip</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cd</span> <span class="string">./fs</span> <span class="string">&amp;&amp;</span> <span class="string">go</span> <span class="string">mod</span> <span class="string">tidy</span> <span class="string">&amp;&amp;</span> <span class="string">make</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cd</span> <span class="string">../iam</span> <span class="string">&amp;&amp;</span> <span class="string">go</span> <span class="string">mod</span> <span class="string">tidy</span> <span class="string">&amp;&amp;</span> <span class="string">make</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">untracked:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 在這目錄下，執行後的檔案都會被打包起來</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./</span></span><br><span class="line">  <span class="comment"># 限制只有 develop branch 會執行此 job</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build:aws-cli:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build:aws-cli</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">amazon/aws-cli</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">$AWS_ACCESS_KEY_ID</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">$AWS_SECRET_ACCESS_KEY</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">$AWS_DEFAULT_REGION</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">untracked:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">dependencies:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build:golang</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build:node:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build:node</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">node:16</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">-g</span> <span class="string">aws-cdk@1.171.0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cdk</span> <span class="string">bootstrap</span> <span class="string">aws://$AWS_ACCOUNT_ID/$AWS_DEFAULT_REGION</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">untracked:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">dependencies:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build:aws-cli</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="看的圖吧"><a href="#看的圖吧" class="headerlink" title="看的圖吧"></a>看的圖吧</h1><ul>
+<li>當你push你的code上到master時，pipeline的stage名稱<br><img src="/notebook/./gitlab-CICD-introduce/1.png" alt="label"></li>
+<li>你可以查看你跑的Job<br><img src="/notebook/./gitlab-CICD-introduce/2.png" alt="label"></li>
+<li>你可以查看你跑的過程log<br><img src="/notebook/./gitlab-CICD-introduce/3.png" alt="label"></li>
+</ul>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>gitlab其實還有很多功能，這部分真的需要許多實戰經驗，畢竟部署時，會隨著開發所需要的環境與依賴而增加難易度，建議多看看官方文件，gitlab還有runner的用法，還有本文中也尚未提到變數的設定，這些之後再說明了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/" data-id="cl8n56o2e0005rjtw5n0nd03s" data-title="gitlab CI/CD introduce" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-How-to-using-CDK" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/How-to-using-CDK/" class="article-date">
+  <time class="dt-published" datetime="2022-09-20T08:53:13.000Z" itemprop="datePublished">2022-09-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/aws/">aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/How-to-using-CDK/">How to using CDK</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="什麼是CDK"><a href="#什麼是CDK" class="headerlink" title="什麼是ＣＤＫ"></a>什麼是ＣＤＫ</h1><p>CDK 是 AWS Cloud Development Kit (AWS CDK) 是一套開源軟體開發架構，使用熟悉的程式設計語言定義您的雲端應用程式資源。</p>
+<p>早期佈建雲端應用程式可能是具有挑戰性的過程，需要透過手動操作、撰寫自訂指令碼、維護範本或學習特定領域的語言。AWS CDK 使用程式設計語言的熟悉性和表達能力，幫助應用程式進行模型分析。</p>
+<p>它提供的高階元件 (稱為建構) 可利用經過驗證的預設值預先設定雲端資源，因此，您可以輕鬆建置雲端應用程式。AWS CDK 透過 AWS CloudFormation，以安全、可重複的方式佈建您的資源。它也讓您能夠編寫和分享自己的自訂建構，以整合組織的需求，協助您加快新專案。</p>
+<h1 id="CDK-支援哪些語言"><a href="#CDK-支援哪些語言" class="headerlink" title="CDK 支援哪些語言"></a>CDK 支援哪些語言</h1><p>目前CDK已經出到V2的版本，透過doc能夠知道，CDK支援了Python、.Net、Go、Java、TypeScript，從這點來看，比較起Terraform 的自定義語言，CDK提供了不同的撰寫語言，讓開發者使用自己所熟悉的語言撰寫IaC，這點真是大大的降低學習成本，那使用Terraform難道就活該倒楣嗎？不～針對偏好使用 Terraform 的客戶，cdktf 提供以 TypeScript 和 Python 定義 Terraform HCL 狀態檔案的 CDK 建構。</p>
+<h1 id="CDK8s"><a href="#CDK8s" class="headerlink" title="CDK8s"></a>CDK8s</h1><p>對於 Kubernetes 使用者，cdk8s 專案可讓您使用 CDK 建構在 TypeScript、Python 和 Java 中定義 Kubernetes 組態。超級方便～</p>
+<h1 id="一切都從官網開始"><a href="#一切都從官網開始" class="headerlink" title="一切都從官網開始"></a>一切都從官網開始</h1><p>第一次學習CDK的人可以使用以下兩個官網，稍微看看，了解CDK能夠做到哪些事情<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cdk/api/v2/">cdk doc</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hashicorp/terraform-cdk">cdkf</a></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>小編這次因內部需求所需，需將AWS Support 所開立的CASE同步到自己的內部系統上，因此使用CDK作為IaC的主要工具，並以golang作為lambda的語言，以下為本次實作架構，另外，小編使用的電腦為MAC，如果是Windows就抱歉拉，如果需要Windows，歡迎敲碗～</p>
+<p><img src="https://storage.googleapis.com/andy.gaiatechs.info/1.png" alt="架構"></p>
+<h1 id="建立CDK專案前的準備"><a href="#建立CDK專案前的準備" class="headerlink" title="建立CDK專案前的準備"></a>建立CDK專案前的準備</h1><ol>
+<li><p>安裝 Node 和 NPM, 若你的安裝或升級過程遇到權限問題, 可能會用到sudo, 需要鍵入 superuser password<br><code>$ brew install node</code><br><code>$ npm install -g aws-cdk</code></p>
+</li>
+<li><p>安裝 golang<br><code>$ brew install go </code></p>
+</li>
+<li><p>安裝AWS CLI<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">下載CLI V2</a></p>
+</li>
+<li><p>生成Access Key ID &amp; Secret Access Key，建議大家可以建立一個IAM 的 group，然後把新創建的user加入群組</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br><span class="line"></span><br><span class="line">#VARs</span><br><span class="line">username=$1</span><br><span class="line">group=&quot;admin-group&quot;</span><br><span class="line">password=`openssl rand -base64 32`</span><br><span class="line"></span><br><span class="line">#create user with password then add user into a group and create ak and sk</span><br><span class="line">echo &quot;User: $username Password: $password&quot;</span><br><span class="line">aws iam create-user --user-name $username --tags Key=Org,Value=Support Key=CreatedBy,Value=awscli</span><br><span class="line">aws iam create-login-profile --user-name $1 --password $password --password-reset-required</span><br><span class="line">aws iam add-user-to-group --user-name $username --group-name $group</span><br><span class="line">aws iam create-access-key --user-name $username</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>設定 AWS CLI<br><code>$ aws configure</code></p>
+<figure class="highlight plaintext"><figcaption><span>Access Key ID [None]: ANOTREALACCESSKEYID</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AWS Secret Access Key [None]: ANOTREALSECRETACCESSKEY</span><br><span class="line">Default region name [None]: eu-east-1</span><br><span class="line">Default output format [None]: json</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>進行CDK初始化, 需要先得知”Account”跟”Region”的資訊, 從上一個步驟你知道了”Region”, Account的資訊由下面的<code>aws sts get-caller-identity</code>指令得到, Account 的數值是由一串數字組成.<br><code>$ aws sts get-caller-identity</code><br><code>$ cdk bootstrap aws://[ACCOUNT-NUMBER]/[REGION]</code></p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">⏳ Bootstrapping environment aws://123456789012/us-east-1...</span><br><span class="line">CDKToolkit: creating CloudFormation changeset...</span><br><span class="line"></span><br><span class="line">✅  Environment aws://123456789012/us-east-1 bootstrapped.</span><br></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p>‘—cloudformation-execution-policies’ 是允許cloudformation可以執行時使用的IAM policy, 根據the priciple of least privilege, AWS 建議用戶可以另外指定, 上述的做法會以目前用戶擁有的權限給cloudformation 使用.</p>
+</blockquote>
+<blockquote>
+<p>記得替換參數，指令下完後，你會看到正在初始化專案～</p>
+</blockquote>
+<blockquote>
+<p>上方的軟體安裝均可以使用Docker，不過如果你是初學，建議直接安裝於MAC身上，看這人習慣，這邊就不贅述，小編我是直接安裝MAC上，方便開發。AWS的key也可以手動生成，看個人習慣。</p>
+</blockquote>
+<h1 id="安裝建立CDK專案"><a href="#安裝建立CDK專案" class="headerlink" title="安裝建立CDK專案"></a>安裝建立CDK專案</h1><p>準備好以上就可以透過指令產生CDK預設專案拉～</p>
+<p><code>$ mkdir cdk-demo</code><br><code>$ cd cdk-demo</code><br><code>$ cdk init --language typescript</code></p>
+<pre><code>├── bin
+│   └── cdk-demo.ts
+├── cdk.json
+├── jest.config.js
+├── lib
+│   └── cdk-demo-stack.ts
+├── package.json
+├── package-lock.json
+├── README.md
+├── test
+│   └── cdk-demo.test.ts
+└── tsconfig.json
+</code></pre>
+<blockquote>
+<p>以下是一些重要檔案及其用途：</p>
+</blockquote>
+<ul>
+<li><p>bin&#x2F;cdk-project.ts - 這是進入 CDK 應用程式的途徑。此檔案將會載入&#x2F;建立我們在 lib&#x2F;* 底下定義的所有堆疊</p>
+</li>
+<li><p>lib&#x2F;cdk-project-stack.ts - 這是主要的 CDK 應用程式堆疊的定義之處。資源及其屬性可存放於此處。</p>
+</li>
+<li><p>package.json - 您會在此處定義專案相依性，以及一些額外資訊和建置指令碼 (npm build、npm test、npm watch)。</p>
+</li>
+<li><p>cdk.json - 此檔案會向工具組指出如何執行你的應用程式，以及與 CDK 和你的專案相關的一些額外設定和參數。</p>
+</li>
+</ul>
+<p>我們將著重於 lib&#x2F;cdk-demo-stack.ts 和 bin&#x2F;cdk-demo.ts 檔案，以建立我們的基礎設施。我們將新增一段程式碼。</p>
+<h1 id="修改-bin-x2F-cdk-demo-ts"><a href="#修改-bin-x2F-cdk-demo-ts" class="headerlink" title="修改 bin&#x2F;cdk-demo.ts"></a>修改 bin&#x2F;cdk-demo.ts</h1><p>使其顯示如下。請務必將您的 AWS 帳戶 ID 取代為正確的號碼，並選擇正確的區域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;source-map-support/register&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CdkDemoStack</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../lib/cdk-demo-stack&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> cdk.<span class="title class_">App</span>();</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">CdkDemoStack</span>(app, <span class="string">&#x27;CdkDemoStack&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">env</span>: &#123; <span class="attr">account</span>: <span class="string">&#x27;123456789012&#x27;</span>, <span class="attr">region</span>: <span class="string">&#x27;eu-west-1&#x27;</span> &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="接著修改-lib-x2F-cdk-demo-stack-ts"><a href="#接著修改-lib-x2F-cdk-demo-stack-ts" class="headerlink" title="接著修改 lib&#x2F;cdk-demo-stack.ts"></a>接著修改 lib&#x2F;cdk-demo-stack.ts</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> lambda <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-lambda&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> iam <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-iam&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> events <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-events&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> logs <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-logs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> targets <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-events-targets&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> assets <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-s3-assets&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CdkDemoStack</span> <span class="keyword">extends</span> <span class="title class_ inherited__">cdk.Stack</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">scope: cdk.Construct, id: string, props?: cdk.StackProps</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(scope, id, props);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Policy</span></span><br><span class="line">    <span class="keyword">const</span> supportPolicy = <span class="keyword">new</span> iam.<span class="title class_">PolicyStatement</span>(&#123;</span><br><span class="line">      <span class="attr">actions</span>: [<span class="string">&#x27;support:*&#x27;</span>],</span><br><span class="line">      <span class="attr">resources</span>: [<span class="string">&#x27;*&#x27;</span>],</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// lambda</span></span><br><span class="line">    <span class="keyword">const</span> demoLambdaAsset = <span class="keyword">new</span> assets.<span class="title class_">Asset</span>(<span class="variable language_">this</span>, <span class="string">&quot;GoServerLambdaFnZip&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">path</span>: path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;../lambda&quot;</span>),</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// seting lambda and env </span></span><br><span class="line">    <span class="keyword">const</span> demoLambda = <span class="keyword">new</span> lambda.<span class="title class_">Function</span>(<span class="variable language_">this</span>, <span class="string">&#x27;msp&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">runtime</span>: lambda.<span class="property">Runtime</span>.<span class="property">GO_1_X</span>,</span><br><span class="line">      <span class="attr">timeout</span>: cdk.<span class="property">Duration</span>.<span class="title function_">seconds</span>(<span class="number">300</span>),</span><br><span class="line">      <span class="attr">handler</span>: <span class="string">&quot;main&quot;</span>,</span><br><span class="line">      <span class="attr">code</span>: lambda.<span class="property">Code</span>.<span class="title function_">fromBucket</span>(</span><br><span class="line">        demoLambdaAsset.<span class="property">bucket</span>,</span><br><span class="line">        demoLambdaAsset.<span class="property">s3ObjectKey</span></span><br><span class="line">      ),</span><br><span class="line">      <span class="attr">environment</span>: &#123;</span><br><span class="line">        <span class="attr">region</span>: cdk.<span class="property">Stack</span>.<span class="title function_">of</span>(<span class="variable language_">this</span>).<span class="property">region</span>,</span><br><span class="line">        <span class="attr">zones</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(cdk.<span class="property">Stack</span>.<span class="title function_">of</span>(<span class="variable language_">this</span>).<span class="property">availabilityZones</span>),</span><br><span class="line">        <span class="attr">endpoint</span>: <span class="string">&#x27;endpoint&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add policy</span></span><br><span class="line">    mspLambda.<span class="property">role</span>?.<span class="title function_">attachInlinePolicy</span>(</span><br><span class="line">      <span class="keyword">new</span> iam.<span class="title class_">Policy</span>(<span class="variable language_">this</span>, <span class="string">&#x27;demoSupportPolicy&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">statements</span>: [supportPolicy],</span><br><span class="line">      &#125;),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment">// cloudwatch log group</span></span><br><span class="line">    <span class="keyword">const</span> logGroup = <span class="keyword">new</span> logs.<span class="title class_">LogGroup</span>(<span class="variable language_">this</span>, <span class="string">&#x27;demoLogGroup&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">logGroupName</span>: <span class="string">&#x27;demoLogGroup&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add eventBridge</span></span><br><span class="line">    <span class="keyword">const</span> demoEventRule = <span class="keyword">new</span> events.<span class="title class_">Rule</span>(<span class="variable language_">this</span>, <span class="string">&#x27;demoRule&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">eventPattern</span>: &#123;</span><br><span class="line">        <span class="attr">source</span>: [<span class="string">&quot;aws.support&quot;</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add lambda for eventBridge&#x27;s target</span></span><br><span class="line">    demoEventRule.<span class="title function_">addTarget</span>(<span class="keyword">new</span> targets.<span class="title class_">CloudWatchLogGroup</span>(logGroup))</span><br><span class="line">    demoEventRule.<span class="title function_">addTarget</span>(<span class="keyword">new</span> targets.<span class="title class_">LambdaFunction</span>(demoLambda))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果遇到import時找不到套件，記得安裝一下，例如 $ npm install @aws-cdk&#x2F;aws-events</p>
+</blockquote>
+<h1 id="撰寫lambda"><a href="#撰寫lambda" class="headerlink" title="撰寫lambda"></a>撰寫lambda</h1><ol>
+<li><p>建立一個資料夾<br>$ mkdir lambda</p>
+</li>
+<li><p>建立main.go<br>$ touch main.go</p>
+</li>
+<li><p>寫code</p>
+</li>
+</ol>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"> <span class="string">&quot;context&quot;</span></span><br><span class="line"> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"> <span class="string">&quot;log&quot;</span></span><br><span class="line"> <span class="string">&quot;os&quot;</span></span><br><span class="line"></span><br><span class="line"> <span class="string">&quot;github.com/aws/aws-lambda-go/events&quot;</span></span><br><span class="line"> <span class="string">&quot;github.com/aws/aws-lambda-go/lambda&quot;</span></span><br><span class="line"> <span class="string">&quot;github.com/joho/godotenv&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> lambda.Start(HandleRequest)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HandleRequest</span><span class="params">(_ context.Context, event events.CloudWatchEvent)</span></span> <span class="type">error</span> &#123;</span><br><span class="line"> err := godotenv.Load()</span><br><span class="line"> <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  log.Fatal(<span class="string">&quot;Error loading .env file&quot;</span>)</span><br><span class="line"> &#125;</span><br><span class="line"> region := os.Getenv(<span class="string">&quot;region&quot;</span>)</span><br><span class="line"> zones := os.Getenv(<span class="string">&quot;zones&quot;</span>)</span><br><span class="line"> iam_endpoint := os.Getenv(<span class="string">&quot;iam_endpoint&quot;</span>)</span><br><span class="line"></span><br><span class="line"> fmt.Println(<span class="string">&quot;env region:&quot;</span>, region)</span><br><span class="line"> fmt.Println(<span class="string">&quot;env zones:&quot;</span>, zones)</span><br><span class="line"> fmt.Println(<span class="string">&quot;env endpoint:&quot;</span>, iam_endpoint)</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 接收到值後，寫你想要做的事情</span></span><br><span class="line"> fmt.Printf(<span class="string">&quot;PRINT: %#v\n&quot;</span>, event)</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<ol start="4">
+<li>一開始需要進行初始化並且載入相關套件<br><code>$ go mod init main &amp;&amp; go mod tidy</code></li>
+</ol>
+<blockquote>
+<p>這邊golang的code單純進行print cloudwatch的值，且該lambda已經獲得aws.support的權限了，至於要做怎樣的操作，可自由發揮</p>
+</blockquote>
+<h1 id="開始部署嚕"><a href="#開始部署嚕" class="headerlink" title="開始部署嚕"></a>開始部署嚕</h1><ul>
+<li><p>確認您的程式碼是否有效<br><code>$ npm run build</code></p>
+</li>
+<li><p>確認最終產生的CloudFormation是否正確<br><code>$ cdk sync</code></p>
+<blockquote>
+<p>沒意外你會看到一堆很噁心的CloudFormation，你就會知道CDK其實只是幫你產生CloudFormation的yaml來執行而已～</p>
+</blockquote>
+</li>
+<li><p>部署<br><code>$ cdk deploy</code></p>
+  <figure class="highlight plaintext"><figcaption><span>deploying...</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CdkDemoStack: creating CloudFormation changeset...</span><br><span class="line">[··························································] (0/13)</span><br><span class="line"></span><br><span class="line">3:50:17 PM | CREATE_IN_PROGRESS   | AWS::CloudFormation::Stack            | CdkDemoStack</span><br><span class="line">3:50:21 PM | CREATE_IN_PROGRESS   | AWS::EC2::InternetGateway             | MainVpc/IGW</span><br><span class="line">3:50:21 PM | CREATE_IN_PROGRESS   | AWS::EC2::VPC                         | MainVpc</span><br><span class="line">3:50:22 PM | CREATE_IN_PROGRESS   | AWS::CDK::Metadata                    | CDKMetadata/Default</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>礙於小編公司內部資訊不能透露，這邊顯示示意圖～ 只要看到 ✅  就對了</p>
+</blockquote>
+</li>
+</ul>
+<p>幾分鐘後，您應該會看到一個綠色的勾號，以及新建 CloudFormation 堆疊的 ARN (Amazon 資源名稱)。</p>
+<h1 id="測試一下是否成功了"><a href="#測試一下是否成功了" class="headerlink" title="測試一下是否成功了"></a>測試一下是否成功了</h1><p>如果有購買AWS Support就可以去Support建立一張CASE，屆時你就會在cloudwatch中看到log，而由於EventBridge的Target是lambda，因此會觸發你所設置的lambda，也會看到lambda中的log唷。</p>
+<p><img src="https://i.imgur.com/v3duvIo.png"></p>
+<h1 id="將資源刪除"><a href="#將資源刪除" class="headerlink" title="將資源刪除"></a>將資源刪除</h1><p>這就不多廢話，試完了，如果不想要保留，當然要刪除它，直接 $ cdk destroy</p>
+<pre><code>Are you sure you want to delete: CdkEcsInfraStack (y/n)? y
+CdkEcsInfraStack: destroying...
+
+✅  CdkEcsInfraStack: destroyed
+</code></pre>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>CDK真的很方便，可以讓工程們使用自己擅長的語言進行Iac的開發，將CDK納入自己的技能樹，絕對有很大的幫助。</p>
+<h1 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html">aws cdk</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.aws.amazon.com/cdk/api/v2/">aws cdk doc</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/iam/create-login-profile.html">create-login-profile</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/iam/create-user.html">create-user</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/iam/add-user-to-group.html">add-user-to-group</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/How-to-using-CDK/" data-id="cl8n56o3b000nrjtw3yax1c85" data-title="How to using CDK" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-build-Static-Website-on-gcs" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-build-Static-Website-on-gcs/" class="article-date">
+  <time class="dt-published" datetime="2022-09-16T05:18:28.000Z" itemprop="datePublished">2022-09-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>剛好有需求要將靜態網頁放到gcs上，因此就做個紀錄，因為只是紀錄，就不贅述一些自己知道的細節。</p>
+<h1 id="先安裝-gcloud"><a href="#先安裝-gcloud" class="headerlink" title="先安裝 gcloud"></a>先安裝 gcloud</h1><p>請參考 <a href="https://babyandy0111.github.io/notebook/20220517/how-to-install-gcloud/">how to install gcloud</a></p>
+<br>
+
+<h1 id="建立簡單的網站"><a href="#建立簡單的網站" class="headerlink" title="建立簡單的網站"></a>建立簡單的網站</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">npx create-react-app my-app</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> my-app</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">npm run build</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="建立Buckets"><a href="#建立Buckets" class="headerlink" title="建立Buckets"></a>建立Buckets</h1><p><code>gsutil mb gs://[BUCKET_NAME]/</code></p>
+<br>
+
+<p>note: 如果要將網域設定為gcs的，那你就必須要命名為與網域相同的名稱，例如：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.example.com,那就要命名為www.example.com,gcs會告知你需要驗證domain/">www.example.com，那就要命名為www.example.com，gcs會告知你需要驗證domain</a></p>
+<br>
+
+<h1 id="驗證domain"><a href="#驗證domain" class="headerlink" title="驗證domain"></a>驗證domain</h1><p>請到google search console去驗證你的domain，我這邊是使用TXT的方式驗證</p>
+<br>
+
+<p><img src="/notebook/./how-to-build-Static-Website-on-gcs/1.png" alt="label"></p>
+<h1 id="建立服務帳戶"><a href="#建立服務帳戶" class="headerlink" title="建立服務帳戶"></a>建立服務帳戶</h1><p>這邊要建立一個服務帳戶給予權限，並且拿到 gcloud-service-key.json</p>
+<p><img src="/notebook/./how-to-build-Static-Website-on-gcs/2.png" alt="label"></p>
+<h1 id="透過gcloud-amp-gsutil-開始上傳"><a href="#透過gcloud-amp-gsutil-開始上傳" class="headerlink" title="透過gcloud &amp; gsutil 開始上傳"></a>透過gcloud &amp; gsutil 開始上傳</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">gcloud auth activate-service-account --key-file gcloud-service-key.json</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">gcloud config <span class="built_in">set</span> project <span class="variable">$GCP_PROJECT_ID</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">gsutil <span class="built_in">cp</span> -r * gs://<span class="variable">$GCS_BUCKET_NAME</span>/</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">gsutil iam ch allUsers:objectViewer gs://<span class="variable">$GCS_BUCKET_NAME</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">gsutil web <span class="built_in">set</span> -m index.html gs://<span class="variable">$GCS_BUCKET_NAME</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="附上gitlab-ci-x2F-cd-腳本"><a href="#附上gitlab-ci-x2F-cd-腳本" class="headerlink" title="附上gitlab ci&#x2F;cd 腳本"></a>附上gitlab ci&#x2F;cd 腳本</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Build:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">node:14.20.0</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">build:dev</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">untracked:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">node_modules/</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./build</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Deploy:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">google/cloud-sdk</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;$GCP_SERVICE_KEY&quot;</span> <span class="string">&gt;</span> <span class="string">gcloud-service-key.json</span> <span class="comment"># Google Cloud service accounts</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gcloud</span> <span class="string">auth</span> <span class="string">activate-service-account</span> <span class="string">--key-file</span> <span class="string">gcloud-service-key.json</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gcloud</span> <span class="string">config</span> <span class="string">set</span> <span class="string">project</span> <span class="string">$GCP_PROJECT_ID</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cd</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gsutil</span> <span class="string">cp</span> <span class="string">-r</span> <span class="string">*</span> <span class="string">gs://$GCS_BUCKET_NAME/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gsutil</span> <span class="string">iam</span> <span class="string">ch</span> <span class="string">allUsers:objectViewer</span> <span class="string">gs://$GCS_BUCKET_NAME</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gsutil</span> <span class="string">web</span> <span class="string">set</span> <span class="string">-m</span> <span class="string">index.html</span> <span class="string">gs://$GCS_BUCKET_NAME</span></span><br><span class="line">  <span class="attr">dependencies:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">Build</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-Static-Website-on-gcs/" data-id="cl8n56o2o000arjtwd7hifgg3" data-title="how to build Static Website on gcs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-build-x86-64-image-on-M1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-build-x86-64-image-on-M1/" class="article-date">
+  <time class="dt-published" datetime="2022-06-16T09:57:29.000Z" itemprop="datePublished">2022-06-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>透過M1會建立arm64版本， 透過 docker inspect IMAGE_ID可以看到</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker image inspect 0382b9b17bdb</span></span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;Architecture&quot;: &quot;arm64&quot;,</span><br><span class="line">        &quot;Variant&quot;: &quot;v8&quot;,</span><br><span class="line">        &quot;Os&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;Size&quot;: 223036168,</span><br><span class="line">        &quot;VirtualSize&quot;: 223036168,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>所以建立imagge時，改成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker buildx build --platform=linux/amd64 . -t xxx</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>之後就可按照正常的docker tag、docker push進行操作</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-x86-64-image-on-M1/" data-id="cl8n56o2w000frjtw8bhxeo4m" data-title="how to build x86_64 image on M1" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-build-nestjs-on-eks-fargate" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-build-nestjs-on-eks-fargate/" class="article-date">
+  <time class="dt-published" datetime="2022-06-16T04:40:11.000Z" itemprop="datePublished">2022-06-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>上次建立了nestjs專案，並且快速的建立了CRUD，這次我們來把nestjs專案放到eks上，不過不同的是，我們來使用fargate的方式建立eks～</p>
+<br>
+
+<p>fargate 是啥？AWS Fargate 是無伺服器，依用量計費的運算引擎，讓您專注於建置應用程式，而無需管理伺服器。AWS Fargate 適用於搭配 Amazon Elastic Container Service (ECS) 和 Amazon Elastic Kubernetes Service (EKS) 使用。</p>
+<h1 id="建立k8s集群，只是後面多了–fargate"><a href="#建立k8s集群，只是後面多了–fargate" class="headerlink" title="建立k8s集群，只是後面多了–fargate"></a>建立k8s集群，只是後面多了–fargate</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ eksctl create cluster --name YOUR_CLUSTER_NAME --version 1.21 --fargate</span><br></pre></td></tr></table></figure>
+
+<h1 id="允許-AWS-Identity-and-Access-Management-IAM-用於服務賬戶"><a href="#允許-AWS-Identity-and-Access-Management-IAM-用於服務賬戶" class="headerlink" title="允許 AWS Identity and Access Management (IAM) 用於服務賬戶"></a>允許 AWS Identity and Access Management (IAM) 用於服務賬戶</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ eksctl utils associate-iam-oidc-provider --cluster YOUR_CLUSTER_NAME --approve</span><br></pre></td></tr></table></figure>
+
+<h1 id="下載並安裝，允許-AWS-負載均衡器控制器代表您調用-AWS-API-的-IAM-策略"><a href="#下載並安裝，允許-AWS-負載均衡器控制器代表您調用-AWS-API-的-IAM-策略" class="headerlink" title="下載並安裝，允許 AWS 負載均衡器控制器代表您調用 AWS API 的 IAM 策略"></a>下載並安裝，允許 AWS 負載均衡器控制器代表您調用 AWS API 的 IAM 策略</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.1/docs/install/iam_policy.js</span><br></pre></td></tr></table></figure>
+<br>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ aws iam create-policy \</span><br><span class="line">   --policy-name AWSLoadBalancerControllerIAMPolicy \</span><br><span class="line">   --policy-document file://iam_policy.json</span><br></pre></td></tr></table></figure>
+
+<h1 id="建立一個iam-service-account"><a href="#建立一個iam-service-account" class="headerlink" title="建立一個iam service account"></a>建立一個iam service account</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ eksctl create iamserviceaccount \</span><br><span class="line">  --cluster=YOUR_CLUSTER_NAME \</span><br><span class="line">  --namespace=kube-system \</span><br><span class="line">  --name=aws-load-balancer-controller \</span><br><span class="line">  --attach-policy-arn=arn:aws:iam::&lt;AWS_ACCOUNT_ID&gt;:policy/AWSLoadBalancerControllerIAMPolicy \</span><br><span class="line">  --override-existing-serviceaccounts \</span><br><span class="line">  --approve</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="驗證一下是否建立成功"><a href="#驗證一下是否建立成功" class="headerlink" title="驗證一下是否建立成功"></a>驗證一下是否建立成功</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get serviceaccount aws-load-balancer-controller --namespace kube-system</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="Install-the-AWS-Load-Balancer-Controller-using-Helm"><a href="#Install-the-AWS-Load-Balancer-Controller-using-Helm" class="headerlink" title="Install the AWS Load Balancer Controller using Helm"></a>Install the AWS Load Balancer Controller using Helm</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ helm repo add eks https://aws.github.io/eks-charts</span><br></pre></td></tr></table></figure>
+
+<h1 id="安裝-TargetGroupBinding-自定義資源定義-CRD"><a href="#安裝-TargetGroupBinding-自定義資源定義-CRD" class="headerlink" title="安裝 TargetGroupBinding 自定義資源定義 (CRD)"></a>安裝 TargetGroupBinding 自定義資源定義 (CRD)</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -k <span class="string">&quot;github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="開始安裝"><a href="#開始安裝" class="headerlink" title="開始安裝"></a>開始安裝</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">helm install aws-load-balancer-controller eks/aws-load-balancer-controller \</span><br><span class="line">    --<span class="built_in">set</span> clusterName=YOUR_CLUSTER_NAME \</span><br><span class="line">    --<span class="built_in">set</span> serviceAccount.create=<span class="literal">false</span> \</span><br><span class="line">    --<span class="built_in">set</span> region=YOUR_REGION_CODE \</span><br><span class="line">    --<span class="built_in">set</span> vpcId=&lt;VPC_ID&gt; \</span><br><span class="line">    --<span class="built_in">set</span> serviceAccount.name=aws-load-balancer-controller \</span><br><span class="line">    -n kube-system</span><br></pre></td></tr></table></figure>
+
+<br>
+如果你要確認你的VPC ID
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws cloudformation describe-stacks --stack-name eksctl-andy-lab-cluster | jq -r <span class="string">&#x27;[.Stacks[0].Outputs[] | &#123;key: .OutputKey, value: .OutputValue&#125;] | from_entries&#x27;</span> | jq -r <span class="string">&#x27;.VPC&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="準備好docker-file"><a href="#準備好docker-file" class="headerlink" title="準備好docker file"></a>準備好docker file</h1><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:alpine AS dev</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/src/app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> node:alpine as prod</span><br><span class="line"><span class="keyword">ARG</span> NODE_ENV=production</span><br><span class="line"><span class="keyword">ENV</span> NODE_ENV=$&#123;NODE_ENV&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/src/app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install --only=prod</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=dev /usr/src/app/dist ./dist</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;dist/main&quot;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/babyandy0111/nestjs-demo-k8s.git">nestjs專案</a></p>
+<h1 id="先建立-fargateprofile"><a href="#先建立-fargateprofile" class="headerlink" title="先建立 fargateprofile"></a>先建立 fargateprofile</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eksctl create fargateprofile --cluster your-cluster --region your-region-code --name your-alb-sample-app --namespace default</span><br></pre></td></tr></table></figure>
+
+<h1 id="建立Deployment"><a href="#建立Deployment" class="headerlink" title="建立Deployment"></a>建立Deployment</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nestjs-k8s</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nestjs-k8s</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nestjs-k8s</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nestjs-k8s</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">xxxxxxxx.dkr.ecr.us-east-2.amazonaws.com/nestjs-demo:v1</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">3000</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="建立service"><a href="#建立service" class="headerlink" title="建立service"></a>建立service</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nestjs-service</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">service.beta.kubernetes.io/aws-load-balancer-nlb-target-type:</span> <span class="string">&quot;ip&quot;</span></span><br><span class="line">    <span class="attr">service.beta.kubernetes.io/aws-load-balancer-type:</span> <span class="string">external</span></span><br><span class="line">    <span class="attr">service.beta.kubernetes.io/aws-load-balancer-scheme:</span> <span class="string">internet-facing</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nestjs-k8s</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">3000</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">3000</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="確認一下svc有沒有跑出LB位置"><a href="#確認一下svc有沒有跑出LB位置" class="headerlink" title="確認一下svc有沒有跑出LB位置"></a>確認一下svc有沒有跑出LB位置</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get svc</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><img src="/notebook/./how-to-build-nestjs-on-eks-fargate/1.png" alt="label"></p>
+<h1 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h1><p>其實使用fargate eks建立pod頗簡單，且不用特別去管理主機問題，省事許多，不過fargate有一些限制，這部分可以參考AWS的說明。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-nestjs-on-eks-fargate/" data-id="cl8n56o2s000brjtw82k1gdri" data-title="how to build nestjs on eks fargate" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-build-CRUD-with-mysql-on-NestJs" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/build-CRUD-with-mysql-on-NestJs/" class="article-date">
+  <time class="dt-published" datetime="2022-05-28T04:18:20.000Z" itemprop="datePublished">2022-05-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/build-CRUD-with-mysql-on-NestJs/">build CRUD with mysql on NestJs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h5 id="安裝TypeORM"><a href="#安裝TypeORM" class="headerlink" title="安裝TypeORM"></a>安裝TypeORM</h5><p>透過 Nest 官方支援的 TypeORM 來建立 DB。 首先安裝 TypeORM 相關的內容，並使用 typeorm init 來快速建立 typeorm 專案。</p>
+<br>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add @nestjs/typeorm typeorm@0.2 mysql2</span><br><span class="line">$ yarn typeorm init </span><br></pre></td></tr></table></figure>
+<br>
+
+<p>此時你的目錄結構會變成這樣</p>
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/1.png" class="" title="label">
+
+
+<br>
+接著配置Mysql 
+
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 打開 app.module.ts</span></span><br><span class="line"><span class="comment">// 將typeOrmModule填入</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">TypeOrmModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user/user.module&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Module</span>(&#123;</span><br><span class="line">    <span class="attr">imports</span>: [</span><br><span class="line">        <span class="title class_">TypeOrmModule</span>.<span class="title function_">forRoot</span>(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;mysql&#x27;</span>,</span><br><span class="line">            <span class="attr">host</span>: <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">            <span class="attr">port</span>: <span class="number">3306</span>,</span><br><span class="line">            <span class="attr">username</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">            <span class="attr">password</span>: <span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">            <span class="attr">database</span>: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">            <span class="attr">autoLoadEntities</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">synchronize</span>: <span class="literal">true</span>,</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="title class_">UserModule</span>,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">controllers</span>: [],</span><br><span class="line">    <span class="attr">providers</span>: [],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Note: 這邊注意，一般來說不會直接將資料庫帳密填入，因為是DEMO，我們直接在code中配置</p>
+</blockquote>
+<br>
+
+<p>我這邊透過docker-compose啟動mysql，如果需要，可參考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/babyandy0111/dev-dnmp">Andy’s Dev Tool</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker-compose -f docker-compose.yaml up -d mysql</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="開始進行簡單的CRUD"><a href="#開始進行簡單的CRUD" class="headerlink" title="開始進行簡單的CRUD"></a>開始進行簡單的CRUD</h4><p>Nest CLI可以自動產生範本，跟許多知名的framework一樣，可以快速產生CRUD，我們就先透過這方式，並添加之前所述的API Doc描述吧。</p>
+<br>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">$ nest g resource [xxxx]</span> </span><br><span class="line"><span class="meta"># </span><span class="language-bash">xxxx 我習慣使用table name, 這邊就用user當範例吧</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">nest g resource user</span></span><br></pre></td></tr></table></figure>
+
+<br>
+CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI產生範本。
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/2.png" class="" title="lable">
+
+<p>你會看到產生了許多檔案，我會將一些檔案刪除掉，因為有些是透過typeorm init產生的，但我們並不需要，刪除後結果如下～</p>
+<br>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 你也可以手動刪除～</span></span><br><span class="line"><span class="comment"># rm -R entity/</span></span><br><span class="line"><span class="comment"># rm -R migration/</span></span><br><span class="line"><span class="comment"># rm ormconfig.json</span></span><br><span class="line"><span class="comment"># rm app.controller.ts</span></span><br><span class="line"><span class="comment"># rm app.controller.spec.ts</span></span><br><span class="line"><span class="comment"># rm app.service.ts</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/3.png" class="" title="lable">
+
+
+<br>
+
+<p>首先我們先編輯 user.entity.ts，為了示範，把基本的型態都建立一個</p>
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.entity.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Column</span>, <span class="title class_">Entity</span>, <span class="title class_">PrimaryGeneratedColumn</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Entity</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  @<span class="title class_">PrimaryGeneratedColumn</span>()</span><br><span class="line">  <span class="attr">id</span>: number;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">phone</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">age</span>: number;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">createTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">updateTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">isDelete</span>: boolean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>接著我們修改一下dto，這邊有兩個檔案，一個是新增一個是更新。<br>dto，因為api的request需要要進行驗證～所以我們先安裝一下所需套件 </p>
+<br>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">yarn add class-validator class-transformer</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create-user.dto.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IsNotEmpty</span>, <span class="title class_">IsOptional</span>, <span class="title class_">IsString</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Column</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CreateUserDto</span> &#123;</span><br><span class="line">    @<span class="title class_">IsString</span>()</span><br><span class="line">    @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">    <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">IsString</span>()</span><br><span class="line">    @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">    <span class="attr">phone</span>: string;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">    <span class="attr">age</span>: number;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    <span class="attr">createTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    <span class="attr">updateTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Column</span>()</span><br><span class="line">    @<span class="title class_">IsOptional</span>()</span><br><span class="line">    <span class="attr">isDelete</span>: boolean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>編輯module</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.module.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserController</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.controller&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">TypeOrmModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">User</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./entities/user.entity&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Module</span>(&#123;</span><br><span class="line">    <span class="attr">imports</span>: [<span class="title class_">TypeOrmModule</span>.<span class="title function_">forFeature</span>([<span class="title class_">User</span>])], <span class="comment">// 將entity填入</span></span><br><span class="line">    <span class="attr">controllers</span>: [<span class="title class_">UserController</span>],</span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">UserService</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>這時候我們重新啟動一下，就會看到db裡面幫你建立了user table，且裡面的欄位都建立好了，而針對User的CRUD的路由也都出現了唷～</p>
+<br>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">yarn start:dev</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/4.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/5.png" class="" title="lable">
+
+<br>
+
+<p>接下來修改一下service拉，準備把Repository注入 </p>
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CreateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/create-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UpdateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/update-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">InjectRepository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">User</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./entities/user.entity&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Repository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">    @InjectRepository(User) private userRepository: Repository&lt;User&gt;,</span></span><br><span class="line"><span class="params">  </span>) &#123;&#125;</span><br><span class="line">  <span class="title function_">create</span>(<span class="params">createUserDto: CreateUserDto</span>) &#123;</span><br><span class="line">    createUserDto.<span class="property">createTime</span> = createUserDto.<span class="property">updateTime</span> = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">    createUserDto.<span class="property">isDelete</span> = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">save</span>(createUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">find</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">findOne</span>(<span class="params">id: number</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">findByIds</span>([id]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">update</span>(<span class="params">id: number, updateUserDto: UpdateUserDto</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">update</span>(id, updateUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">remove</span>(<span class="params">id: number</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">delete</span>(id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下來為了API DOC進行小微調，controller 的微調是為了定義DOC的描述和指定dto，這邊就進行POST的示範</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.controller.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">Controller</span>,</span><br><span class="line">  <span class="title class_">Get</span>,</span><br><span class="line">  <span class="title class_">Post</span>,</span><br><span class="line">  <span class="title class_">Body</span>,</span><br><span class="line">  <span class="title class_">Patch</span>,</span><br><span class="line">  <span class="title class_">Param</span>,</span><br><span class="line">  <span class="title class_">Delete</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CreateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/create-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UpdateUserDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/update-user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">ApiOperation</span>,</span><br><span class="line">  <span class="title class_">ApiTags</span>,</span><br><span class="line">  <span class="title class_">ApiQuery</span>,</span><br><span class="line">  <span class="title class_">ApiBody</span>,</span><br><span class="line">  <span class="title class_">ApiResponse</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Controller</span>(<span class="string">&#x27;user&#x27;</span>)</span><br><span class="line">@<span class="title class_">ApiTags</span>(<span class="string">&#x27;User&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private readonly userService: UserService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Post</span>()</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;新增一筆user使用&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;新增user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">create</span>(<span class="params">@Body() createUserDto: CreateUserDto</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">create</span>(createUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Get</span>()</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;取得user使用&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;取得user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">findAll</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Get</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;獲取一個user&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;獲取一個user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">findOne</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">findOne</span>(+id);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Patch</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;更新user&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">UpdateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;更新user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">update</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string, @Body() updateUserDto: UpdateUserDto</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">update</span>(+id, updateUserDto);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Delete</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  @<span class="title class_">ApiOperation</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;刪除user&#x27;</span> &#125;)</span><br><span class="line">  @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: <span class="title class_">CreateUserDto</span>, <span class="attr">description</span>: <span class="string">&#x27;刪除user&#x27;</span> &#125;)</span><br><span class="line">  <span class="title function_">remove</span>(<span class="params">@Param(<span class="string">&#x27;id&#x27;</span>) id: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">remove</span>(+id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<br>
+
+<p>dto也要進行微調，dto的微調是為了進行參數驗證</p>
+<br>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create-user.dto.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IsNotEmpty</span>, <span class="title class_">IsOptional</span>, <span class="title class_">IsString</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Column</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiProperty</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CreateUserDto</span> &#123;</span><br><span class="line">  @<span class="title class_">IsString</span>()</span><br><span class="line">  @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">  @<span class="title class_">ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;姓名&#x27;</span> &#125;)</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">IsString</span>()</span><br><span class="line">  @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">  @<span class="title class_">ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&#x27;手機&#x27;</span> &#125;)</span><br><span class="line">  <span class="attr">phone</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  @<span class="title class_">IsNotEmpty</span>()</span><br><span class="line">  @<span class="title class_">ApiProperty</span>(&#123;</span><br><span class="line">    <span class="attr">description</span>: <span class="string">&#x27;年齡&#x27;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">    <span class="attr">minimum</span>: <span class="number">18</span>,</span><br><span class="line">    <span class="attr">default</span>: <span class="number">20</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="attr">age</span>: number;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">createTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">updateTime</span>: <span class="title class_">Date</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  @<span class="title class_">IsOptional</span>()</span><br><span class="line">  <span class="attr">isDelete</span>: boolean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>透過API DOC新增一筆資料～並確認～</p>
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/6.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/7.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/8.png" class="" title="lable">
+
+<br>
+
+<img src="/notebook/build-CRUD-with-mysql-on-NestJs/9.png" class="" title="lable">
+
+<br>
+
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>透過NestJs可以快速產生CRUD，以及API DOC，算是頗方便的～其實還有很多東西可以說，例如Auth和其他重要功能，這之後有空再說吧～</p>
+<br>
+
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.nestjs.com/">nestjs doc</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/babyandy0111/nestjs-demo">完整的範例code</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/" data-id="cl8n56o210001rjtwbmdn8b34" data-title="build CRUD with mysql on NestJs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-using-swagger-on-NestJs" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-using-swagger-on-NestJs/" class="article-date">
+  <time class="dt-published" datetime="2022-05-25T13:13:59.000Z" itemprop="datePublished">2022-05-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-using-swagger-on-NestJs/">how to using swagger on NestJs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>前面有教大家安裝NestJs，今天要教大家快速建立API DOC，這樣除了方便查閱外，進行測試時也很方便容易。</p>
+<h4 id="先進行安裝swagger"><a href="#先進行安裝swagger" class="headerlink" title="先進行安裝swagger"></a>先進行安裝swagger</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save @nestjs/swagger swagger-ui-express</span><br></pre></td></tr></table></figure>
+
+<h4 id="將main-ts改寫，增加SwaggerModule的setup"><a href="#將main-ts改寫，增加SwaggerModule的setup" class="headerlink" title="將main.ts改寫，增加SwaggerModule的setup"></a>將main.ts改寫，增加SwaggerModule的setup</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestFactory</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.module&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SwaggerModule</span>, <span class="title class_">DocumentBuilder</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="title function_">create</span>(<span class="title class_">AppModule</span>);</span><br><span class="line">  <span class="keyword">const</span> config = <span class="keyword">new</span> <span class="title class_">DocumentBuilder</span>()</span><br><span class="line">    .<span class="title function_">setTitle</span>(<span class="string">&#x27;Cats example&#x27;</span>)                       <span class="comment">// 這邊是doc的大標題</span></span><br><span class="line">    .<span class="title function_">setDescription</span>(<span class="string">&#x27;The cats API description&#x27;</span>)     <span class="comment">// 這邊是doc的主要描述</span></span><br><span class="line">    .<span class="title function_">setVersion</span>(<span class="string">&#x27;1.0&#x27;</span>)                              <span class="comment">// api version</span></span><br><span class="line">    .<span class="title function_">addTag</span>(<span class="string">&#x27;cats&#x27;</span>)                                 <span class="comment">// tag, 用來區分區塊用</span></span><br><span class="line">    .<span class="title function_">build</span>();</span><br><span class="line">  <span class="keyword">const</span> <span class="variable language_">document</span> = <span class="title class_">SwaggerModule</span>.<span class="title function_">createDocument</span>(app, config);</span><br><span class="line">  <span class="title class_">SwaggerModule</span>.<span class="title function_">setup</span>(<span class="string">&#x27;api&#x27;</span>, app, <span class="variable language_">document</span>);</span><br><span class="line">  <span class="keyword">await</span> app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">bootstrap</span>();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="重新啟動，基本上沒有再多做其他配置，就會看到以下畫面以下畫面"><a href="#重新啟動，基本上沒有再多做其他配置，就會看到以下畫面以下畫面" class="headerlink" title="重新啟動，基本上沒有再多做其他配置，就會看到以下畫面以下畫面"></a>重新啟動，基本上沒有再多做其他配置，就會看到以下畫面以下畫面</h4><img src="/notebook/how-to-using-swagger-on-NestJs/1.png" class="" title="label">
+
+
+<br>
+
+<h4 id="熟悉一下NestJs-CLI"><a href="#熟悉一下NestJs-CLI" class="headerlink" title="熟悉一下NestJs CLI"></a>熟悉一下NestJs CLI</h4><p>基本上安裝了NestJs就會安裝了CLI</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nest </span><br><span class="line">$ nest g resource [xxxx]</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/how-to-using-swagger-on-NestJs/2.png" class="" title="label">
+
+<br>
+
+<p>嘗試使用CLI將xxxx產生，你會發現很神奇的產生了許多預設檔案。<br>生成的代碼有 Controller、Service、Module，而且也有了 CRUD 的樣板。</p>
+<br>
+
+<img src="/notebook/how-to-using-swagger-on-NestJs/3.png" class="" title="label">
+
+
+<br>
+
+<p>下一章節在跟各位說明如何把CRUD填上～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-using-swagger-on-NestJs/" data-id="cl8n56o4c001arjtwhcp0auwu" data-title="how to using swagger on NestJs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-install-NestJs" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-NestJs/" class="article-date">
+  <time class="dt-published" datetime="2022-05-25T13:08:06.000Z" itemprop="datePublished">2022-05-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-NestJs/">how to install NestJs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="what-is-nestjs"><a href="#what-is-nestjs" class="headerlink" title="what is nestjs"></a>what is nestjs</h1><p>Nest (NestJS) 是一個用於構建高效、可擴展的Node.js服務器端應用程序的框架。它使用漸進式 JavaScript，使用 TypeScript 構建並完全支持TypeScript（但仍允許開發人員使用純 JavaScript 進行編碼），並結合了 OOP（面向對象編程）、FP（函數式編程）和 FRP（函數式反應式編程）的元素。</p>
+<br>
+
+<p>在底層，Nest 使用了強大的 HTTP 服務器框架，比如Express（默認），並且可以選擇配置為使用Fastify！</p>
+<br>
+
+<p>Nest 在這些常見的 Node.js 框架（Express&#x2F;Fastify）之上提供了一個抽象級別，但也將它們的 API 直接暴露給開發人員。這使開發人員可以自由使用可用於底層平台的無數第三方模塊。</p>
+<br>
+
+<h1 id="why-nestjs"><a href="#why-nestjs" class="headerlink" title="why nestjs"></a>why nestjs</h1><p>近年來，由於 Node.js，JavaScript 已成為前端和後端應用程序的網絡“通用語”。這催生了Angular、React和Vue等很棒的項目，它們提高了開發人員的工作效率，並支持創建快速、可測試和可擴展的前端應用程序。然而，雖然 Node（和服務器端 JavaScript）存在大量出色的庫、幫助程序和工具，但它們都沒有有效地解決架構的主要問題。</p>
+<p>Nest 提供了一個開箱即用的應用程序架構，允許開發人員和團隊創建高度可測試、可擴展、鬆散耦合且易於維護的應用程序。該架構深受 Angular 的啟發。</p>
+<h1 id="how-to-install"><a href="#how-to-install" class="headerlink" title="how to install"></a>how to install</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -g @nestjs/cli</span><br><span class="line">$ nest new [project-name]</span><br><span class="line">$ <span class="built_in">cd</span> [project-name] &amp;&amp; npm run start</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<img src="/notebook/how-to-install-NestJs/1.png" class="" title="label">
+
+<br>
+
+<p>打開瀏覽器並導航到 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://localhost:3000/">http://localhost:3000/</a> <br></p>
+<br>
+
+
+<p>出現HelloWorld，就可以開始寫API拉～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-NestJs/" data-id="cl8n56o2y000hrjtwfdk69vzb" data-title="how to install NestJs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-install-k8s-on-azure" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-k8s-on-azure/" class="article-date">
+  <time class="dt-published" datetime="2022-05-24T04:40:11.000Z" itemprop="datePublished">2022-05-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/azure/">azure</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-k8s-on-azure/">how to install k8s on azure</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>使用azure的doc範例</li>
+<li>基本上照著做應該不會有問題</li>
+</ul>
+<ol>
+<li>先把azure的範例抓下來，並且進行build<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Azure-Samples/azure-voting-app-redis.git</span><br><span class="line">$ <span class="built_in">cd</span> azure-voting-app-redis</span><br><span class="line">$ docker-compose up -d</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>使用瀏覽器測試一下，輸入http:localhost:8080 <br></p>
+<img src="/notebook/how-to-install-k8s-on-azure/1.png" class="" title="label">
+
+<p>然後你也會看到三個image，這是後續需要用到的image，準備上傳到ACR</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line">mcr.microsoft.com/azuredocs/azure-vote-front</span><br><span class="line">mcr.microsoft.com/oss/bitnami/redis</span><br><span class="line">tiangolo/uwsgi-nginx-flask </span><br></pre></td></tr></table></figure>
+
+<h1 id="建立ACR"><a href="#建立ACR" class="headerlink" title="建立ACR"></a>建立ACR</h1><ol>
+<li><p>先建立group，下面指令會在 eastus 區域中建立名為 myResourceGroup 的資源群組</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ az group create --name andy-lab --location eastus</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;id&quot;</span>: <span class="string">&quot;/subscriptions/cd4e3d37-eaae-493b-886f-436bc6012f4d/resourceGroups/andy-lab&quot;</span>,</span><br><span class="line">  <span class="string">&quot;location&quot;</span>: <span class="string">&quot;eastasia&quot;</span>,</span><br><span class="line">  <span class="string">&quot;managedBy&quot;</span>: null,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;andy-lab&quot;</span>,</span><br><span class="line">  <span class="string">&quot;properties&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;provisioningState&quot;</span>: <span class="string">&quot;Succeeded&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;tags&quot;</span>: null,</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Microsoft.Resources/resourceGroups&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 az acr create 命令建立 Azure Container Registry 執行個體，並提供您自己的登錄名稱。 登錄名稱在 Azure 內必須是唯一的，且包含 5-50 個英數字元。這邊取名叫 acrtest。</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ az acr create -n andylabar -g andy-lab -l eastasia --sku basic</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;adminUserEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;anonymousPullEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;creationDate&quot;</span>: <span class="string">&quot;2022-05-24T03:01:43.942760+00:00&quot;</span>,</span><br><span class="line">  <span class="string">&quot;dataEndpointEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;dataEndpointHostNames&quot;</span>: [],</span><br><span class="line">  <span class="string">&quot;encryption&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;keyVaultProperties&quot;</span>: null,</span><br><span class="line">    <span class="string">&quot;status&quot;</span>: <span class="string">&quot;disabled&quot;</span></span><br><span class="line">  &#125; ... 以下省略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以確認一下是否建立成功了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ az acr list -o table</span><br></pre></td></tr></table></figure>
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/2.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/5.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/6.png" class="" title="label">
+
+<br>
+
+<ol start="3">
+<li>準備上傳你的image</li>
+</ol>
+<p>要使用ACR前必須透過使用命令登入 ACR</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ az acr login -n andylabar</span><br><span class="line">Login Succeeded</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>透過acr list找出acrLoginServer</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ az acr list --resource-group andy-lab --query <span class="string">&quot;[].&#123;acrLoginServer:loginServer&#125;&quot;</span> --output table</span><br><span class="line">AcrLoginServer</span><br><span class="line">--------------------</span><br><span class="line">andylabar.azurecr.io</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>上傳image</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 andylabar.azurecr.io/azure-vote-front:v1</span><br><span class="line"></span><br><span class="line">$ docker push andylabar.azurecr.io/azure-vote-front:v1</span><br><span class="line"></span><br><span class="line">$ az acr repository list --name andylabar --output table</span><br><span class="line">Result</span><br><span class="line">----------------</span><br><span class="line">azure-vote-front</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ol start="4">
+<li>開始建立k8s集群到azure，需等待一段時間</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">az aks create \</span><br><span class="line">    --resource-group andy-lab \</span><br><span class="line">    --name andyAKSCluster \</span><br><span class="line">    --node-count 2 \</span><br><span class="line">    --generate-ssh-keys \</span><br><span class="line">    --attach-acr andylabar</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ol start="5">
+<li>登入集群<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ az aks get-credentials --resource-group andy-lab --name andyAKSCluster</span><br><span class="line">Merged <span class="string">&quot;andyAKSCluster&quot;</span> as current context <span class="keyword">in</span> /Users/andywang/.kube/config</span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<ol start="6">
+<li>透過指令確認你本機的cluster是否建立<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config get-clusters</span><br><span class="line">NAME</span><br><span class="line">andyAKSCluster</span><br><span class="line">andy-lab.us-east-2.eksctl.io</span><br><span class="line">arn:aws:eks:us-east-2:185271018684:cluster/andy-lab</span><br><span class="line">docker-desktop</span><br><span class="line">test-cluster.us-east-2.eksctl.io</span><br><span class="line">arn:aws:eks:us-east-2:185271018684:cluster/test-cluster</span><br></pre></td></tr></table></figure>
+<br></li>
+</ol>
+<img src="/notebook/how-to-install-k8s-on-azure/7.png" class="" title="label">
+
+<blockquote>
+<p>Note: 如果你要切換cluster，請執行 kubectl config set current-context [cluster name]</p>
+</blockquote>
+<br>
+
+<ol start="7">
+<li>將image部署到AKS上了<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">containers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">azure-vote-front</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">mcr.microsoft.com/azuredocs/azure-vote-front:v1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 改成你自己的acr</span></span><br><span class="line"><span class="attr">containers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">azure-vote-front</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">andylabar.azurecr.io/azure-vote-front:v1</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<br>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f azure-vote-all-in-one-redis.yaml</span><br><span class="line">deployment.apps/azure-vote-back created</span><br><span class="line">service/azure-vote-back created</span><br><span class="line">deployment.apps/azure-vote-front created</span><br><span class="line">service/azure-vote-front created</span><br></pre></td></tr></table></figure>
+<br>
+
+<ol start="8">
+<li>測試自己的應用程式<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get service azure-vote-front</span><br></pre></td></tr></table></figure>
+<br></li>
+</ol>
+<img src="/notebook/how-to-install-k8s-on-azure/8.png" class="" title="label">
+
+<br>
+
+<img src="/notebook/how-to-install-k8s-on-azure/9.png" class="" title="label">
+
+
+<h1 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.microsoft.com/zh-tw/azure/aks/tutorial-kubernetes-prepare-app">azure k8s</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/" data-id="cl8n56o42000zrjtwc1uz6vpk" data-title="how to install k8s on azure" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-install-azure-cli" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-install-azure-cli/" class="article-date">
+  <time class="dt-published" datetime="2022-05-23T13:02:29.000Z" itemprop="datePublished">2022-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/azure/">azure</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-install-azure-cli/">how to install azure cli</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="what-is-Azure-CLI"><a href="#what-is-Azure-CLI" class="headerlink" title="what is Azure CLI"></a>what is Azure CLI</h1><p>Azure 命令列介面 (CLI) 是跨平台命令列工具，可連線到 Azure 並在 Azure 資源上執行系統管理命令。 其允許透過終端機使用互動式命令列提示或指令碼來執行命令。<br>若要進行互動式使用，你必須先在 Windows 上啟動 cmd.exe 之類的殼層，或在 Linux 或 macOS 上啟動 Bash，然後在殼層提示字元發出命令。 若要自動化重複的工作，你可以使用所選殼層的腳本語法，將 CLI 命令組合成殼層腳本，然後執行腳本。</p>
+<h1 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h1><p>在mac上安裝，如果沒有Homebrew就去安裝<br><br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">brew update &amp;&amp; brew install azure-cli</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">如果在M1上 brew要改成 <span class="built_in">arch</span> -arm64 brew</span></span><br></pre></td></tr></table></figure>
+<br>
+
+<p>安裝完之後，執行<br><br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">az login</span></span><br></pre></td></tr></table></figure>
+
+<p>會跳出瀏覽起進行驗證登入，就直接在瀏覽器中操作後，再回到console，會看到驗證資訊了～</p>
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.microsoft.com/zh-tw/cli/azure/install-azure-cli">az cli install</a><br><br></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.microsoft.com/zh-tw/cli/azure/get-started-with-azure-cli">az cli 命令</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-azure-cli/" data-id="cl8n56o3o000rrjtwao6kc0d7" data-title="how to install azure cli" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/notebook/page/2/">2</a><a class="page-number" href="/notebook/page/3/">3</a><a class="extend next" rel="next" href="/notebook/page/2/">下一頁 &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/How-to-using-CDK/">How to using CDK</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-Static-Website-on-gcs/">how to build Static Website on gcs</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
+          </li>
+        
+          <li>
+            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Andy<br>
+      Powered by <a href="https://hexo.io/" rel="external nofollow noreferrer" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/notebook/" class="mobile-nav-link">Home</a>
+  
+    <a href="/notebook/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/notebook/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/notebook/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/notebook/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
