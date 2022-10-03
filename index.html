@@ -77,6 +77,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-how-to-trigger-lambda-from-kinesis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-trigger-lambda-from-kinesis/" class="article-date">
+  <time class="dt-published" datetime="2022-10-03T07:19:27.000Z" itemprop="datePublished">2022-10-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/data-lambda-kinesis-aws/">data, lambda, kinesis, aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/notebook/how-to-trigger-lambda-from-kinesis/">how-to-trigger-lambda-from-kinesis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>How to Trigger an AWS Lambda from Kinesis</p>
+<h1 id="How-to-Trigger-an-AWS-Lambda-from-Kinesis"><a href="#How-to-Trigger-an-AWS-Lambda-from-Kinesis" class="headerlink" title="How to Trigger an AWS Lambda from Kinesis"></a>How to Trigger an AWS Lambda from Kinesis</h1><h2 id="先建立資料夾拉～～～"><a href="#先建立資料夾拉～～～" class="headerlink" title="先建立資料夾拉～～～"></a>先建立資料夾拉～～～</h2><p><code>mkdir how-to-trigger-lambda-from-kinesis</code><br><code>cd how-to-trigger-lambda-from-kinesis</code><br><code>npx cdk init app --language typescript</code></p>
+<h2 id="安裝-kinesis-amp-lambda"><a href="#安裝-kinesis-amp-lambda" class="headerlink" title="安裝 kinesis &amp; lambda"></a>安裝 kinesis &amp; lambda</h2><p><code>npm i @aws-cdk/aws-kinesis</code><br><code>npm i @aws-cdk/aws-lambda</code><br><code>npm i @aws-cdk/aws-lambda-event-sources</code></p>
+<h2 id="新增一個檔案-env"><a href="#新增一個檔案-env" class="headerlink" title="新增一個檔案.env"></a>新增一個檔案.env</h2><p><code>touch .env</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AWS_ACCOUNT_ID=1234567890123</span><br><span class="line">AWS_DEFAULT_REGION=us-east-1</span><br><span class="line">AWS_ACCESS_KEY_ID=xxxxxx</span><br><span class="line">AWS_SECRET_ACCESS_KEY=xxxxxxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-how-to-trigger-lambda-from-kinesis-ts"><a href="#修改-how-to-trigger-lambda-from-kinesis-ts" class="headerlink" title="修改 how-to-trigger-lambda-from-kinesis.ts"></a>修改 how-to-trigger-lambda-from-kinesis.ts</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;source-map-support/register&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">HowToTriggerLambdaFromKinesisStack</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../lib/how-to-trigger-lambda-from-kinesis-stack&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> cdk.<span class="title class_">App</span>();</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">HowToTriggerLambdaFromKinesisStack</span>(app, <span class="string">&#x27;HowToTriggerLambdaFromKinesisStack&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">      <span class="attr">account</span>: process.<span class="property">env</span>.<span class="property">AWS_ACCOUNT_ID</span>,</span><br><span class="line">      <span class="attr">region</span>: process.<span class="property">env</span>.<span class="property">AWS_REGION</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-how-to-trigger-lambda-from-kinesis-stack-ts"><a href="#修改-how-to-trigger-lambda-from-kinesis-stack-ts" class="headerlink" title="修改 how-to-trigger-lambda-from-kinesis-stack.ts"></a>修改 how-to-trigger-lambda-from-kinesis-stack.ts</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> kinesis <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-kinesis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">HowToTriggerLambdaFromKinesisStack</span> <span class="keyword">extends</span> <span class="title class_ inherited__">cdk.Stack</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">scope: cdk.Construct, id: string, props?: cdk.StackProps</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(scope, id, props);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> stream = <span class="keyword">new</span> kinesis.<span class="title class_">Stream</span>(<span class="variable language_">this</span>, <span class="string">&#x27;MyKinesisStream&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">streamName</span>: <span class="string">&#x27;MyKinesisStream&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;<span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新增-src-x2F-index-js-撰寫一下lambda-code-這次來用一下nodejs寫"><a href="#新增-src-x2F-index-js-撰寫一下lambda-code-這次來用一下nodejs寫" class="headerlink" title="新增 src&#x2F;index.js 撰寫一下lambda code (這次來用一下nodejs寫)"></a>新增 src&#x2F;index.js 撰寫一下lambda code (這次來用一下nodejs寫)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.<span class="property">handler</span> = <span class="keyword">async</span> (event) =&gt; &#123;</span><br><span class="line">  event.<span class="property">Records</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">record</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Record: %j&#x27;</span>, record);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="準備發佈前"><a href="#準備發佈前" class="headerlink" title="準備發佈前"></a>準備發佈前</h2><p><code>cdk bootstrap</code><br>⏳  Bootstrapping environment aws:&#x2F;&#x2F;xxxxxxxx&#x2F;us-east-2…<br>✅  Environment aws:&#x2F;&#x2F;xxxxxxx&#x2F;us-east-2 bootstrapped (no changes).</p>
+<h2 id="發佈"><a href="#發佈" class="headerlink" title="發佈"></a>發佈</h2><p><code>cdk deploy</code></p>
+<h2 id="test"><a href="#test" class="headerlink" title="test"></a>test</h2><p><code>aws kinesis list-streams</code><br><code>aws kinesis put-record --data &quot;aGVsbG8sIHdvcmxk&quot; --stream-name MyKinesisStream --partition-key pk1</code></p>
+<p><img src="/notebook/./how-to-trigger-lambda-from-kinesis/1.png" alt="label"></p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/babyandy0111/how-to-trigger-lambda-from-kinesis">github</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-trigger-lambda-from-kinesis/" data-id="cl8ssb5or001cd64u4oy53rv0" data-title="how-to-trigger-lambda-from-kinesis" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/cdk-aws-kinesis/" rel="tag">cdk, aws, kinesis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-gitlab-CICD-introduce" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/notebook/gitlab-CICD-introduce/" class="article-date">
@@ -182,7 +243,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/" data-id="cl8n5dim9000agntwgqsuhvk9" data-title="gitlab CI/CD introduce" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/gitlab-CICD-introduce/" data-id="cl8ssb5n6000ad64uhy0ahu96" data-title="gitlab CI/CD introduce" class="article-share-link">Share</a>
       
       
       
@@ -342,7 +403,7 @@ CdkEcsInfraStack: destroying...
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/How-to-using-CDK/" data-id="cl8n5dilm0001gntw5oy0c9kd" data-title="How to using CDK" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/How-to-using-CDK/" data-id="cl8ssb5mh0001d64u9hzba2xe" data-title="How to using CDK" class="article-share-link">Share</a>
       
       
       
@@ -410,7 +471,7 @@ CdkEcsInfraStack: destroying...
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-Static-Website-on-gcs/" data-id="cl8n5dimd000bgntweqn11emd" data-title="how to build Static Website on gcs" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-Static-Website-on-gcs/" data-id="cl8ssb5nb000bd64ubqsdfg5i" data-title="how to build Static Website on gcs" class="article-share-link">Share</a>
       
       
       
@@ -460,7 +521,7 @@ CdkEcsInfraStack: destroying...
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-x86-64-image-on-M1/" data-id="cl8n5dini0016gntwftzj88vh" data-title="how to build x86_64 image on M1" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-x86-64-image-on-M1/" data-id="cl8ssb5ni000hd64udzz88aql" data-title="how to build x86_64 image on M1" class="article-share-link">Share</a>
       
       
       
@@ -551,7 +612,7 @@ CdkEcsInfraStack: destroying...
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-nestjs-on-eks-fargate/" data-id="cl8n5dimh000fgntwctw758nm" data-title="how to build nestjs on eks fargate" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-build-nestjs-on-eks-fargate/" data-id="cl8ssb5ng000fd64uboikg9rf" data-title="how to build nestjs on eks fargate" class="article-share-link">Share</a>
       
       
       
@@ -728,7 +789,7 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/" data-id="cl8n5dilz0005gntw5adn2glz" data-title="build CRUD with mysql on NestJs" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/build-CRUD-with-mysql-on-NestJs/" data-id="cl8ssb5ms0004d64u3yc37g4d" data-title="build CRUD with mysql on NestJs" class="article-share-link">Share</a>
       
       
       
@@ -802,7 +863,7 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/how-to-using-swagger-on-NestJs/" data-id="cl8n5dinj001dgntwgv7jdm96" data-title="how to using swagger on NestJs" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-using-swagger-on-NestJs/" data-id="cl8ssb5os001fd64uco0rcah8" data-title="how to using swagger on NestJs" class="article-share-link">Share</a>
       
       
       
@@ -870,7 +931,7 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-NestJs/" data-id="cl8n5dimj000hgntwgqaybnwg" data-title="how to install NestJs" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-NestJs/" data-id="cl8ssb5ns000ld64uh48qfrwp" data-title="how to install NestJs" class="article-share-link">Share</a>
       
       
       
@@ -1013,66 +1074,11 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/" data-id="cl8n5dind0012gntwd1bc4qns" data-title="how to install k8s on azure" class="article-share-link">Share</a>
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-k8s-on-azure/" data-id="cl8ssb5ok0011d64ue9rl5j7z" data-title="how to install k8s on azure" class="article-share-link">Share</a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-how-to-install-azure-cli" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/notebook/how-to-install-azure-cli/" class="article-date">
-  <time class="dt-published" datetime="2022-05-23T13:02:29.000Z" itemprop="datePublished">2022-05-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/notebook/categories/azure/">azure</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/notebook/how-to-install-azure-cli/">how to install azure cli</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="what-is-Azure-CLI"><a href="#what-is-Azure-CLI" class="headerlink" title="what is Azure CLI"></a>what is Azure CLI</h1><p>Azure 命令列介面 (CLI) 是跨平台命令列工具，可連線到 Azure 並在 Azure 資源上執行系統管理命令。 其允許透過終端機使用互動式命令列提示或指令碼來執行命令。<br>若要進行互動式使用，你必須先在 Windows 上啟動 cmd.exe 之類的殼層，或在 Linux 或 macOS 上啟動 Bash，然後在殼層提示字元發出命令。 若要自動化重複的工作，你可以使用所選殼層的腳本語法，將 CLI 命令組合成殼層腳本，然後執行腳本。</p>
-<h1 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h1><p>在mac上安裝，如果沒有Homebrew就去安裝<br><br></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">brew update &amp;&amp; brew install azure-cli</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">如果在M1上 brew要改成 <span class="built_in">arch</span> -arm64 brew</span></span><br></pre></td></tr></table></figure>
-<br>
-
-<p>安裝完之後，執行<br><br></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">az login</span></span><br></pre></td></tr></table></figure>
-
-<p>會跳出瀏覽起進行驗證登入，就直接在瀏覽器中操作後，再回到console，會看到驗證資訊了～</p>
-<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.microsoft.com/zh-tw/cli/azure/install-azure-cli">az cli install</a><br><br></p>
-<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.microsoft.com/zh-tw/cli/azure/get-started-with-azure-cli">az cli 命令</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://babyandy0111.github.io/notebook/how-to-install-azure-cli/" data-id="cl8n5dimu000ngntwdzpy5w8b" data-title="how to install azure cli" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li></ul>
 
     </footer>
   </div>
@@ -1097,7 +1103,7 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
   <div class="widget-wrap">
     <h3 class="widget-title">分類</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/Snyk/">Snyk</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/aws/">aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/azure/">azure</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/data-lambda-kinesis-aws/">data, lambda, kinesis, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/fig/">fig</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcp-gcloud/">gcp gcloud</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gcs-gcp-html/">gcs gcp html</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/gitlab-ci-cd-cdk-aws/">gitlab, ci/cd, cdk, aws</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubectl/">kubectl</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/mysql-crud-NestJs/">mysql crud NestJs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs/">nodejs nestjs</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger/">nodejs nestjs doc swagger</a></li><li class="category-list-item"><a class="category-list-link" href="/notebook/categories/nodejs-nestjs-doc-swagger-fargate-aws/">nodejs nestjs doc swagger fargate aws</a></li></ul>
     </div>
   </div>
 
@@ -1107,7 +1113,7 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
   <div class="widget-wrap">
     <h3 class="widget-title">標籤</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/Snyk-Security/" rel="tag">Snyk Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-eksctl/" rel="tag">aws eksctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-login-eks-k8s/" rel="tag">aws login eks k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-nestjs-fargate/" rel="tag">aws nestjs fargate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/aws-cli/" rel="tag">aws-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-k8s-cluster/" rel="tag">azure k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/azure-cli/" rel="tag">azure-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-kinesis/" rel="tag">cdk, aws, kinesis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" rel="tag">cdk, aws, node, cloudWatch, eventBridge, lambda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/cdk-gitlab-ci-cd/" rel="tag">cdk, gitlab, ci&#x2F;cd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/docker-container-image/" rel="tag">docker container image</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/fig-terminal/" rel="tag">fig terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcp-gcloud/" rel="tag">gcp gcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/gcs-gcp-html/" rel="tag">gcs gcp html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-cluster/" rel="tag">k8s cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-component/" rel="tag">k8s component</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes/" rel="tag">k8s kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/k8s-kubernetes-cluster/" rel="tag">k8s kubernetes cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/kubectl/" rel="tag">kubectl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/mysql-crud-NestJs/" rel="tag">mysql crud NestJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-express/" rel="tag">nodejs nestjs express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/notebook/tags/nodejs-nestjs-swagger/" rel="tag">nodejs nestjs swagger</a></li></ul>
     </div>
   </div>
 
@@ -1117,7 +1123,7 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
   <div class="widget-wrap">
     <h3 class="widget-title">標籤雲</h3>
     <div class="widget tagcloud">
-      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
+      <a href="/notebook/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/notebook/tags/Snyk-Security/" style="font-size: 10px;">Snyk Security</a> <a href="/notebook/tags/aws-eksctl/" style="font-size: 10px;">aws eksctl</a> <a href="/notebook/tags/aws-login-eks-k8s/" style="font-size: 10px;">aws login eks k8s</a> <a href="/notebook/tags/aws-nestjs-fargate/" style="font-size: 10px;">aws nestjs fargate</a> <a href="/notebook/tags/aws-cli/" style="font-size: 10px;">aws-cli</a> <a href="/notebook/tags/azure-k8s-cluster/" style="font-size: 10px;">azure k8s cluster</a> <a href="/notebook/tags/azure-cli/" style="font-size: 10px;">azure-cli</a> <a href="/notebook/tags/cdk-aws-kinesis/" style="font-size: 10px;">cdk, aws, kinesis</a> <a href="/notebook/tags/cdk-aws-node-cloudWatch-eventBridge-lambda/" style="font-size: 10px;">cdk, aws, node, cloudWatch, eventBridge, lambda</a> <a href="/notebook/tags/cdk-gitlab-ci-cd/" style="font-size: 10px;">cdk, gitlab, ci/cd</a> <a href="/notebook/tags/docker-container-image/" style="font-size: 10px;">docker container image</a> <a href="/notebook/tags/fig-terminal/" style="font-size: 10px;">fig terminal</a> <a href="/notebook/tags/gcp-gcloud/" style="font-size: 10px;">gcp gcloud</a> <a href="/notebook/tags/gcs-gcp-html/" style="font-size: 10px;">gcs gcp html</a> <a href="/notebook/tags/k8s-cluster/" style="font-size: 10px;">k8s cluster</a> <a href="/notebook/tags/k8s-component/" style="font-size: 10px;">k8s component</a> <a href="/notebook/tags/k8s-kubernetes/" style="font-size: 10px;">k8s kubernetes</a> <a href="/notebook/tags/k8s-kubernetes-cluster/" style="font-size: 20px;">k8s kubernetes cluster</a> <a href="/notebook/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/notebook/tags/mysql-crud-NestJs/" style="font-size: 10px;">mysql crud NestJs</a> <a href="/notebook/tags/nodejs-nestjs-express/" style="font-size: 10px;">nodejs nestjs express</a> <a href="/notebook/tags/nodejs-nestjs-swagger/" style="font-size: 10px;">nodejs nestjs swagger</a>
     </div>
   </div>
 
@@ -1126,7 +1132,7 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
   <div class="widget-wrap">
     <h3 class="widget-title">彙整</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/10/">十月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/notebook/archives/2022/02/">二月 2022</a></li></ul>
     </div>
   </div>
 
@@ -1137,6 +1143,10 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/notebook/how-to-trigger-lambda-from-kinesis/">how-to-trigger-lambda-from-kinesis</a>
+          </li>
         
           <li>
             <a href="/notebook/gitlab-CICD-introduce/">gitlab CI/CD introduce</a>
@@ -1152,10 +1162,6 @@ CLI會問你要產生怎樣的API，這邊先選REST吧，並且透過Nest CLI�
         
           <li>
             <a href="/notebook/how-to-build-x86-64-image-on-M1/">how to build x86_64 image on M1</a>
-          </li>
-        
-          <li>
-            <a href="/notebook/how-to-build-nestjs-on-eks-fargate/">how to build nestjs on eks fargate</a>
           </li>
         
       </ul>

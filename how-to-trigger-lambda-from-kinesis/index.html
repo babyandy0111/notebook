@@ -4,17 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>Category: mysql crud NestJs | Andy&#39;s NoteBook</title>
+  <title>how-to-trigger-lambda-from-kinesis | Andy&#39;s NoteBook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Hello Word~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Andy&#39;s NoteBook">
-<meta property="og:url" content="https://babyandy0111.github.io/notebook/categories/mysql-crud-NestJs/index.html">
+  <meta name="description" content="How to Trigger an AWS Lambda from Kinesis How to Trigger an AWS Lambda from Kinesis先建立資料夾拉～～～mkdir how-to-trigger-lambda-from-kinesiscd how-to-trigger-lambda-from-kinesisnpx cdk init app --language ty">
+<meta property="og:type" content="article">
+<meta property="og:title" content="how-to-trigger-lambda-from-kinesis">
+<meta property="og:url" content="https://babyandy0111.github.io/notebook/how-to-trigger-lambda-from-kinesis/index.html">
 <meta property="og:site_name" content="Andy&#39;s NoteBook">
-<meta property="og:description" content="Hello Word~">
+<meta property="og:description" content="How to Trigger an AWS Lambda from Kinesis How to Trigger an AWS Lambda from Kinesis先建立資料夾拉～～～mkdir how-to-trigger-lambda-from-kinesiscd how-to-trigger-lambda-from-kinesisnpx cdk init app --language ty">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://babyandy0111.github.io/notebook/how-to-trigger-lambda-from-kinesis/1.png">
+<meta property="article:published_time" content="2022-10-03T07:19:27.000Z">
+<meta property="article:modified_time" content="2022-10-03T13:04:55.620Z">
 <meta property="article:author" content="Andy">
+<meta property="article:tag" content="cdk, aws, kinesis">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://babyandy0111.github.io/notebook/how-to-trigger-lambda-from-kinesis/1.png">
   
     <link rel="alternate" href="/notebook/atom.xml" title="Andy's NoteBook" type="application/atom+xml">
   
@@ -75,39 +80,75 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/notebook/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/notebook/build-CRUD-with-mysql-on-NestJs/" class="archive-article-date">
-  <time class="dt-published" datetime="2022-05-28T04:18:20.000Z" itemprop="datePublished">5月 28</time>
+        <section id="main"><article id="post-how-to-trigger-lambda-from-kinesis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/notebook/how-to-trigger-lambda-from-kinesis/" class="article-date">
+  <time class="dt-published" datetime="2022-10-03T07:19:27.000Z" itemprop="datePublished">2022-10-03</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/notebook/categories/data-lambda-kinesis-aws/">data, lambda, kinesis, aws</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/notebook/build-CRUD-with-mysql-on-NestJs/">build CRUD with mysql on NestJs</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      how-to-trigger-lambda-from-kinesis
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>How to Trigger an AWS Lambda from Kinesis</p>
+<h1 id="How-to-Trigger-an-AWS-Lambda-from-Kinesis"><a href="#How-to-Trigger-an-AWS-Lambda-from-Kinesis" class="headerlink" title="How to Trigger an AWS Lambda from Kinesis"></a>How to Trigger an AWS Lambda from Kinesis</h1><h2 id="先建立資料夾拉～～～"><a href="#先建立資料夾拉～～～" class="headerlink" title="先建立資料夾拉～～～"></a>先建立資料夾拉～～～</h2><p><code>mkdir how-to-trigger-lambda-from-kinesis</code><br><code>cd how-to-trigger-lambda-from-kinesis</code><br><code>npx cdk init app --language typescript</code></p>
+<h2 id="安裝-kinesis-amp-lambda"><a href="#安裝-kinesis-amp-lambda" class="headerlink" title="安裝 kinesis &amp; lambda"></a>安裝 kinesis &amp; lambda</h2><p><code>npm i @aws-cdk/aws-kinesis</code><br><code>npm i @aws-cdk/aws-lambda</code><br><code>npm i @aws-cdk/aws-lambda-event-sources</code></p>
+<h2 id="新增一個檔案-env"><a href="#新增一個檔案-env" class="headerlink" title="新增一個檔案.env"></a>新增一個檔案.env</h2><p><code>touch .env</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AWS_ACCOUNT_ID=1234567890123</span><br><span class="line">AWS_DEFAULT_REGION=us-east-1</span><br><span class="line">AWS_ACCESS_KEY_ID=xxxxxx</span><br><span class="line">AWS_SECRET_ACCESS_KEY=xxxxxxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-how-to-trigger-lambda-from-kinesis-ts"><a href="#修改-how-to-trigger-lambda-from-kinesis-ts" class="headerlink" title="修改 how-to-trigger-lambda-from-kinesis.ts"></a>修改 how-to-trigger-lambda-from-kinesis.ts</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;source-map-support/register&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">HowToTriggerLambdaFromKinesisStack</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../lib/how-to-trigger-lambda-from-kinesis-stack&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> cdk.<span class="title class_">App</span>();</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">HowToTriggerLambdaFromKinesisStack</span>(app, <span class="string">&#x27;HowToTriggerLambdaFromKinesisStack&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">      <span class="attr">account</span>: process.<span class="property">env</span>.<span class="property">AWS_ACCOUNT_ID</span>,</span><br><span class="line">      <span class="attr">region</span>: process.<span class="property">env</span>.<span class="property">AWS_REGION</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-how-to-trigger-lambda-from-kinesis-stack-ts"><a href="#修改-how-to-trigger-lambda-from-kinesis-stack-ts" class="headerlink" title="修改 how-to-trigger-lambda-from-kinesis-stack.ts"></a>修改 how-to-trigger-lambda-from-kinesis-stack.ts</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cdk <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> kinesis <span class="keyword">from</span> <span class="string">&#x27;@aws-cdk/aws-kinesis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">HowToTriggerLambdaFromKinesisStack</span> <span class="keyword">extends</span> <span class="title class_ inherited__">cdk.Stack</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">scope: cdk.Construct, id: string, props?: cdk.StackProps</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(scope, id, props);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> stream = <span class="keyword">new</span> kinesis.<span class="title class_">Stream</span>(<span class="variable language_">this</span>, <span class="string">&#x27;MyKinesisStream&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">streamName</span>: <span class="string">&#x27;MyKinesisStream&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;<span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新增-src-x2F-index-js-撰寫一下lambda-code-這次來用一下nodejs寫"><a href="#新增-src-x2F-index-js-撰寫一下lambda-code-這次來用一下nodejs寫" class="headerlink" title="新增 src&#x2F;index.js 撰寫一下lambda code (這次來用一下nodejs寫)"></a>新增 src&#x2F;index.js 撰寫一下lambda code (這次來用一下nodejs寫)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.<span class="property">handler</span> = <span class="keyword">async</span> (event) =&gt; &#123;</span><br><span class="line">  event.<span class="property">Records</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">record</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Record: %j&#x27;</span>, record);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="準備發佈前"><a href="#準備發佈前" class="headerlink" title="準備發佈前"></a>準備發佈前</h2><p><code>cdk bootstrap</code><br>⏳  Bootstrapping environment aws:&#x2F;&#x2F;xxxxxxxx&#x2F;us-east-2…<br>✅  Environment aws:&#x2F;&#x2F;xxxxxxx&#x2F;us-east-2 bootstrapped (no changes).</p>
+<h2 id="發佈"><a href="#發佈" class="headerlink" title="發佈"></a>發佈</h2><p><code>cdk deploy</code></p>
+<h2 id="test"><a href="#test" class="headerlink" title="test"></a>test</h2><p><code>aws kinesis list-streams</code><br><code>aws kinesis put-record --data &quot;aGVsbG8sIHdvcmxk&quot; --stream-name MyKinesisStream --partition-key pk1</code></p>
+<p><img src="/notebook/./how-to-trigger-lambda-from-kinesis/1.png" alt="label"></p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/babyandy0111/how-to-trigger-lambda-from-kinesis">github</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://babyandy0111.github.io/notebook/how-to-trigger-lambda-from-kinesis/" data-id="cl8ssb5or001cd64u4oy53rv0" data-title="how-to-trigger-lambda-from-kinesis" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notebook/tags/cdk-aws-kinesis/" rel="tag">cdk, aws, kinesis</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/notebook/gitlab-CICD-introduce/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">gitlab CI/CD introduce</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
